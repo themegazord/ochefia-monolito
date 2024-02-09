@@ -18,3 +18,6 @@ Route::get('/cadastro', [\App\Http\Controllers\Autenticacao\CadastroController::
 Route::prefix('cliente')->group(function () {
     Route::post('cadastro', [\App\Http\Controllers\Cliente\ClienteController::class, 'store']);
 });
+Route::prefix('empresa')->group(function () {
+    Route::post('cadastro', [\App\Http\Controllers\Empresa\EmpresaController::class, 'store']);
+});

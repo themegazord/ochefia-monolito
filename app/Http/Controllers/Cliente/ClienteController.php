@@ -7,6 +7,7 @@ use App\Exceptions\Cliente\ClienteException;
 use App\Http\Controllers\Controller;
 use App\Services\Cliente\ClienteService;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -15,7 +16,7 @@ class ClienteController extends Controller
         private readonly ClienteService $clienteService
     ) {
     }
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         try {
             $this->clienteService->cadastro($request->only([
@@ -53,20 +54,5 @@ class ClienteController extends Controller
                 ]
             );
         }
-
-        // try {
-        //     $this->teste();
-        // } catch (Exception $e) {
-        //     return back()->with('erro', [
-        //         'tipo' => 'sucesso',
-        //         'titulo' => 'teste',
-        //         'notificacao' => 'dawdawdaaaad teste'
-        //     ]);
-        // }
-    }
-
-    public function teste()
-    {
-        throw new Exception('errooooaaaaoooooooooo', 422);
     }
 }

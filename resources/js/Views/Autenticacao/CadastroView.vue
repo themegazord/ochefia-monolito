@@ -17,27 +17,6 @@ export default {
   setup() {
     return {
       v$: useVuelidate(),
-      cliente: useForm({
-        cliente_nome: "",
-        cliente_email: "",
-        cliente_cpf: "",
-        cliente_senha: "",
-        cliente_senha_confirmacao: "",
-        cliente_telefone_pessoal: "",
-        cliente_telefone_contato: "",
-      }),
-      empresa: useForm({
-        nome: "",
-        cnpj: "",
-        descricao: "",
-        logo: null,
-      }),
-      dono: useForm({
-        nome: "",
-        email: "",
-        senha: "",
-        senhaVerificacao: "",
-      }),
     };
   },
   components: {
@@ -58,6 +37,27 @@ export default {
       escolhamodalidade: "cliente",
       descricao: ["Bar", "Mercearia", "Restaurante", "Mercado", "Outros"],
       ativaNotificacao: false,
+      cliente: {
+        cliente_nome: "",
+        cliente_email: "",
+        cliente_cpf: "",
+        cliente_senha: "",
+        cliente_senha_confirmacao: "",
+        cliente_telefone_pessoal: "",
+        cliente_telefone_contato: "",
+      },
+      empresa: {
+        empresa_nome: "",
+        empresa_cnpj: "",
+        empresa_descricao: "",
+        empresa_logo: null,
+      },
+      dono: {
+        funcionario_nome: "",
+        funcionario_email: "",
+        funcionario_senha: "",
+        funcionario_senha_confirmacao: "",
+      },
       notificacao: {
         tipo: null,
         titulo: null,
@@ -66,9 +66,26 @@ export default {
     };
   },
   methods: {
-    cadastro() {
+    async cadastro() {
       if (this.escolhamodalidade == "cliente") {
-        router.post("/cliente/cadastro", this.cliente);
+        if (await this.v$.cliente.$validate()) {
+          router.post("/cliente/cadastro", this.cliente);
+        }
+      }
+      if (this.escolhamodalidade == "dono") {
+        if (
+          (await this.v$.empresa.$validate()) &&
+          (await this.v$.dono.$validate())
+        ) {
+          router.post("/empresa/cadastro", {
+            empresa: this.empresa,
+            dono: {
+              ...this.dono,
+              cargo: "DONO",
+              acessos: ["*"],
+            },
+          });
+        }
       }
     },
   },
@@ -153,7 +170,7 @@ export default {
         },
       },
       dono: {
-        nome: {
+        funcionario_nome: {
           required: helpers.withMessage(
             "O campo de nome é obrigatório.",
             required
@@ -163,7 +180,7 @@ export default {
             maxLength(255)
           ),
         },
-        email: {
+        funcionario_email: {
           required: helpers.withMessage(
             "O campo de nome é obrigatório.",
             required
@@ -174,7 +191,7 @@ export default {
           ),
           email: helpers.withMessage("O email é inválido", email),
         },
-        senha: {
+        funcionario_senha: {
           required: helpers.withMessage(
             "O campo de nome é obrigatório.",
             required
@@ -184,7 +201,7 @@ export default {
             maxLength(255)
           ),
         },
-        senhaVerificacao: {
+        funcionario_senha_confirmacao: {
           required: helpers.withMessage(
             "O campo de nome é obrigatório.",
             required
@@ -195,12 +212,12 @@ export default {
           ),
           sameAs: helpers.withMessage(
             "A senha e a confirmação devem ser as mesmas",
-            sameAs(this.dono.senha)
+            sameAs(this.dono.funcionario_senha)
           ),
         },
       },
       empresa: {
-        nome: {
+        empresa_nome: {
           required: helpers.withMessage(
             "O campo de nome é obrigatório.",
             required
@@ -210,7 +227,7 @@ export default {
             maxLength(255)
           ),
         },
-        cnpj: {
+        empresa_cnpj: {
           required: helpers.withMessage(
             "O campo de nome é obrigatório.",
             required
@@ -277,23 +294,27 @@ export default {
             ></v-text-field>
             <v-text-field
               v-if="escolhamodalidade == 'dono'"
-              v-model="dono.nome"
-              :error-messages="v$.dono.nome.$errors.map((e) => e.$message)"
+              v-model="dono.funcionario_nome"
+              :error-messages="
+                v$.dono.funcionario_nome.$errors.map((e) => e.$message)
+              "
               counter="255"
               label="Insira seu nome"
-              @input="v$.dono.nome.$touch"
-              @blur="v$.dono.nome.$touch"
+              @input="v$.dono.funcionario_nome.$touch"
+              @blur="v$.dono.funcionario_nome.$touch"
             >
             </v-text-field>
           </v-col>
           <v-col cols="6">
             <v-text-field
               :disabled="escolhamodalidade == 'cliente'"
-              v-model="empresa.nome"
-              :error-messages="v$.empresa.nome.$errors.map((e) => e.$message)"
+              v-model="empresa.empresa_nome"
+              :error-messages="
+                v$.empresa.empresa_nome.$errors.map((e) => e.$message)
+              "
               label="Insira o nome da sua empresa"
-              @input="v$.empresa.nome.$touch"
-              @blur="v$.empresa.nome.$touch"
+              @input="v$.empresa.empresa_nome.$touch"
+              @blur="v$.empresa.empresa_nome.$touch"
               counter="255"
             ></v-text-field>
           </v-col>
@@ -313,22 +334,26 @@ export default {
             ></v-text-field>
             <v-text-field
               v-if="escolhamodalidade == 'dono'"
-              v-model="dono.email"
+              v-model="dono.funcionario_email"
               type="email"
-              :error-messages="v$.dono.email.$errors.map((e) => e.$message)"
+              :error-messages="
+                v$.dono.funcionario_email.$errors.map((e) => e.$message)
+              "
               label="Insira seu email"
-              @input="v$.dono.email.$touch"
-              @blur="v$.dono.email.$touch"
+              @input="v$.dono.funcionario_email.$touch"
+              @blur="v$.dono.funcionario_email.$touch"
             ></v-text-field>
           </v-col>
           <v-col cols="6">
             <v-text-field
               :disabled="escolhamodalidade == 'cliente'"
-              v-model="empresa.cnpj"
-              :error-messages="v$.empresa.cnpj.$errors.map((e) => e.$message)"
+              v-model="empresa.empresa_cnpj"
+              :error-messages="
+                v$.empresa.empresa_cnpj.$errors.map((e) => e.$message)
+              "
               label="Insira o CNPJ da sua empresa"
-              @input="v$.empresa.cnpj.$touch"
-              @blur="v$.empresa.cnpj.$touch"
+              @input="v$.empresa.empresa_cnpj.$touch"
+              @blur="v$.empresa.empresa_cnpj.$touch"
               counter="14"
             ></v-text-field>
           </v-col>
@@ -351,7 +376,7 @@ export default {
               :items="descricao"
               label="Como você define seu estabelecimento?"
               :disabled="escolhamodalidade == 'cliente'"
-              v-model="empresa.descricao"
+              v-model="empresa.empresa_descricao"
             ></v-select>
           </v-col>
         </v-row>
@@ -385,21 +410,25 @@ export default {
               v-if="escolhamodalidade == 'dono'"
               type="password"
               label="Insira sua senha"
-              v-model="dono.senha"
-              :error-messages="v$.dono.senha.$errors.map((e) => e.$message)"
-              @input="v$.dono.senha.$touch"
-              @blur="v$.dono.senha.$touch"
+              v-model="dono.funcionario_senha"
+              :error-messages="
+                v$.dono.funcionario_senha.$errors.map((e) => e.$message)
+              "
+              @input="v$.dono.funcionario_senha.$touch"
+              @blur="v$.dono.funcionario_senha.$touch"
             ></v-text-field>
             <v-text-field
               v-if="escolhamodalidade == 'dono'"
               type="password"
               label="Confirme sua senha"
-              v-model="dono.senhaVerificacao"
+              v-model="dono.funcionario_senha_confirmacao"
               :error-messages="
-                v$.dono.senhaVerificacao.$errors.map((e) => e.$message)
+                v$.dono.funcionario_senha_confirmacao.$errors.map(
+                  (e) => e.$message
+                )
               "
-              @input="v$.dono.senhaVerificacao.$touch"
-              @blur="v$.dono.senhaVerificacao.$touch"
+              @input="v$.dono.funcionario_senha_confirmacao.$touch"
+              @blur="v$.dono.funcionario_senha_confirmacao.$touch"
             ></v-text-field>
           </v-col>
           <v-col cols="6">
@@ -408,7 +437,7 @@ export default {
               prepend-icon="fas fa-paperclip"
               label="Caso tenha, insira o logo da sua empresa"
               :disabled="escolhamodalidade == 'cliente'"
-              v-model="empresa.logo"
+              v-model="empresa.empresa_logo"
             ></v-file-input>
           </v-col>
         </v-row>
