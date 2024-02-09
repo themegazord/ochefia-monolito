@@ -14,3 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/login', [\App\Http\Controllers\Autenticacao\LoginController::class, 'login']);
+Route::get('/cadastro', [\App\Http\Controllers\Autenticacao\CadastroController::class, 'index']);
+Route::prefix('cliente')->group(function () {
+    Route::post('cadastro', [\App\Http\Controllers\Cliente\ClienteController::class, 'store']);
+});
