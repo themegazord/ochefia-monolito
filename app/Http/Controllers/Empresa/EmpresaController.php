@@ -23,11 +23,11 @@ class EmpresaController extends Controller
                 $dadosFuncionario = $request->toArray()['dono'];
                 $dadosFuncionario['empresa_id'] = $empresa->toArray()['id'];
                 $this->funcionarioService->cadastro($dadosFuncionario);
-                return back()->with(
+                return to_route('login')->with(
                     'bfm',
                     [
                         'tipo' => 'sucesso',
-                        'titulo' => 'Cadastro da empresa e dono',
+                        'titulo' => 'Cadastro concluído',
                         'notificacao' => 'Cadastro concluído com sucesso'
                     ]
                 );
@@ -40,11 +40,11 @@ class EmpresaController extends Controller
                 $dadosFuncionario = $request->toArray()['dono'];
                 $dadosFuncionario['empresa_id'] = $empresa->toArray()['id'];
                 $this->funcionarioService->cadastro($dadosFuncionario);
-                return back()->with(
+                return to_route('login')->with(
                     'bfm',
                     [
                         'tipo' => 'sucesso',
-                        'titulo' => 'Cadastro da empresa e dono',
+                        'titulo' => 'Cadastro concluído',
                         'notificacao' => 'Cadastro concluído com sucesso'
                     ]
                 );

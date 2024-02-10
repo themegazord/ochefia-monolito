@@ -14,8 +14,7 @@ class ClienteController extends Controller
 {
     public function __construct(
         private readonly ClienteService $clienteService
-    ) {
-    }
+    ) {}
     public function store(Request $request): RedirectResponse
     {
         try {
@@ -27,7 +26,7 @@ class ClienteController extends Controller
                 'cliente_telefone_pessoal',
                 'cliente_telefone_contato'
             ]));
-            return back()->with(
+            return to_route('login')->with(
                 'bfm',
                 [
                     'tipo' => 'sucesso',

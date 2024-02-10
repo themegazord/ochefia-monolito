@@ -9,7 +9,7 @@ import {
   email,
   sameAs,
 } from "@vuelidate/validators";
-import { router, useForm } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 import { useVuelidate } from "@vuelidate/core";
 import { validaCPF } from "@/utils/validaCPF";
 import { validaCNPJ } from "@/utils/validaCNPJ";
