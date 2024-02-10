@@ -11,19 +11,24 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 
-class LoginController extends Controller {
-    public function __construct(
-        private readonly Links $links
-    ){}
+class LoginController extends Controller
+{
+  public function __construct(
+      private readonly Links $links
+  )
+  {
+  }
 
-    public function index(): Response|ResponseFactory {
-        return \inertia('Autenticacao/LoginView', [
-            'links' => $this->links->getLinks()
-        ]);
-    }
+  public function index(): Response|ResponseFactory
+  {
+    return \inertia('Autenticacao/LoginView', [
+        'links' => $this->links->getLinks()
+    ]);
+  }
 
-    public function store(Request $request): RedirectResponse {
-        Auth::attempt($request->only(['email', 'password']), $request->get('manterLogado'));
-        return to_route('dashboard');
-    }
+  public function store(Request $request): RedirectResponse
+  {
+    Auth::attempt($request->only(['email', 'password']), $request->get('manterLogado'));
+    return to_route('dashboard');
+  }
 }

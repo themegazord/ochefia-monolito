@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClienteRepository implements ICliente
 {
-    public function cadastro(array $cliente): Model
-    {
-        return Cliente::query()
-            ->create($cliente);
-    }
+  public function cadastro(array $cliente): Model
+  {
+    return Cliente::query()
+        ->create($cliente);
+  }
 
-    public function clientePorCPF(string $cpf): ?Model
-    {
-        return Cliente::query()
-            ->where('cliente_cpf', $cpf)
-            ->first();
-    }
+  public function clientePorCPF(string $cpf): ?Model
+  {
+    return Cliente::query()
+        ->where('cliente_cpf', $cpf)
+        ->first();
+  }
 }

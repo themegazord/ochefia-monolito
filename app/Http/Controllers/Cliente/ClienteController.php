@@ -12,46 +12,49 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
-    public function __construct(
-        private readonly ClienteService $clienteService
-    ) {}
-    public function store(Request $request): RedirectResponse
-    {
-        try {
-            $this->clienteService->cadastro($request->only([
-                'cliente_nome',
-                'cliente_email',
-                'cliente_senha',
-                'cliente_cpf',
-                'cliente_telefone_pessoal',
-                'cliente_telefone_contato'
-            ]));
-            return to_route('login')->with(
-                'bfm',
-                [
-                    'tipo' => 'sucesso',
-                    'titulo' => 'Cadastro concluído',
-                    'notificacao' => 'Cadastro concluído com sucesso'
-                ]
-            );
-        } catch (ClienteException $ce) {
-            return back()->with(
-                'bfm',
-                [
-                    'tipo' => 'erro',
-                    'titulo' => 'Erro no cadastro',
-                    'notificacao' => $ce->getMessage()
-                ]
-            );
-        } catch (AutenticacaoException $ae) {
-            return back()->with(
-                'bfm',
-                [
-                    'tipo' => 'erro',
-                    'titulo' => 'Erro na autenticação',
-                    'notificacao' => $ae->getMessage()
-                ]
-            );
-        }
+  public function __construct(
+      private readonly ClienteService $clienteService
+  )
+  {
+  }
+
+  public function store(Request $request): RedirectResponse
+  {
+    try {
+      $this->clienteService->cadastro($request->only([
+          'cliente_nome',
+          'cliente_email',
+          'cliente_senha',
+          'cliente_cpf',
+          'cliente_telefone_pessoal',
+          'cliente_telefone_contato'
+      ]));
+      return to_route('login')->with(
+          'bfm',
+          [
+              'tipo' => 'sucesso',
+              'titulo' => 'Cadastro concluído',
+              'notificacao' => 'Cadastro concluído com sucesso'
+          ]
+      );
+    } catch (ClienteException $ce) {
+      return back()->with(
+          'bfm',
+          [
+              'tipo' => 'erro',
+              'titulo' => 'Erro no cadastro',
+              'notificacao' => $ce->getMessage()
+          ]
+      );
+    } catch (AutenticacaoException $ae) {
+      return back()->with(
+          'bfm',
+          [
+              'tipo' => 'erro',
+              'titulo' => 'Erro na autenticação',
+              'notificacao' => $ae->getMessage()
+          ]
+      );
     }
+  }
 }

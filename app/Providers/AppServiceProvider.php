@@ -19,40 +19,40 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        $this->app->scoped(ClienteService::class, function(Application $app) {
-            $clienteRepository = $app->make(ICliente::class);
-            $cadastroService = $app->make(CadastroService::class);
-            return new ClienteService($clienteRepository, $cadastroService);
-        });
-        $this->app->scoped(CadastroService::class, function(Application $app) {
-            $usuarioRepository = $app->make(IUsuario::class);
-            return new CadastroService($usuarioRepository);
-        });
-        $this->app->scoped(EmpresaService::class, function(Application $app) {
-            $empresaRepository = $app->make(IEmpresa::class);
-            return new EmpresaService($empresaRepository);
-        });
-        $this->app->scoped(FuncionarioService::class, function(Application $app) {
-            $funcionarioRepository = $app->make(IFuncionario::class);
-            $cadastroService = $app->make(CadastroService::class);
-            $empresaService = $app->make(EmpresaService::class);
-            return new FuncionarioService($funcionarioRepository, $cadastroService, $empresaService);
-        });
-    }
+  /**
+   * Register any application services.
+   */
+  public function register(): void
+  {
+    $this->app->scoped(ClienteService::class, function (Application $app) {
+      $clienteRepository = $app->make(ICliente::class);
+      $cadastroService = $app->make(CadastroService::class);
+      return new ClienteService($clienteRepository, $cadastroService);
+    });
+    $this->app->scoped(CadastroService::class, function (Application $app) {
+      $usuarioRepository = $app->make(IUsuario::class);
+      return new CadastroService($usuarioRepository);
+    });
+    $this->app->scoped(EmpresaService::class, function (Application $app) {
+      $empresaRepository = $app->make(IEmpresa::class);
+      return new EmpresaService($empresaRepository);
+    });
+    $this->app->scoped(FuncionarioService::class, function (Application $app) {
+      $funcionarioRepository = $app->make(IFuncionario::class);
+      $cadastroService = $app->make(CadastroService::class);
+      $empresaService = $app->make(EmpresaService::class);
+      return new FuncionarioService($funcionarioRepository, $cadastroService, $empresaService);
+    });
+  }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        $this->app->bind(ICliente::class, ClienteRepository::class);
-        $this->app->bind(IUsuario::class, UsuarioRepository::class);
-        $this->app->bind(IEmpresa::class, EmpresaRepository::class);
-        $this->app->bind(IFuncionario::class, FuncionarioRepository::class);
-    }
+  /**
+   * Bootstrap any application services.
+   */
+  public function boot(): void
+  {
+    $this->app->bind(ICliente::class, ClienteRepository::class);
+    $this->app->bind(IUsuario::class, UsuarioRepository::class);
+    $this->app->bind(IEmpresa::class, EmpresaRepository::class);
+    $this->app->bind(IFuncionario::class, FuncionarioRepository::class);
+  }
 }

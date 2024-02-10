@@ -2,16 +2,16 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Linhas de Idioma de Validação
-    |--------------------------------------------------------------------------
-    |
-    | As seguintes linhas de idioma contêm as mensagens de erro padrão usadas pelo
-    | classe de validador. Algumas dessas regras têm várias versões, como
-    | as regras de tamanho. Sinta-se à vontade para ajustar cada uma dessas mensagens aqui.
-    |
-    */
+  /*
+  |--------------------------------------------------------------------------
+  | Linhas de Idioma de Validação
+  |--------------------------------------------------------------------------
+  |
+  | As seguintes linhas de idioma contêm as mensagens de erro padrão usadas pelo
+  | classe de validador. Algumas dessas regras têm várias versões, como
+  | as regras de tamanho. Sinta-se à vontade para ajustar cada uma dessas mensagens aqui.
+  |
+  */
 
     'accepted' => 'O campo :attribute deve ser aceito.',
     'accepted_if' => 'O campo :attribute deve ser aceito quando :other for :value.',
@@ -158,16 +158,16 @@ return [
     'ulid' => 'O campo :attribute deve ser um ULID válido.',
     'uuid' => 'O campo :attribute deve ser um UUID válido.',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Linhas de Idioma de Validação Personalizadas
-    |--------------------------------------------------------------------------
-    |
-    | Aqui você pode especificar mensagens de validação personalizadas para atributos usando a
-    | convenção "attribute.rule" para nomear as linhas. Isso torna rápido
-    | especificar uma linha de idioma personalizada específica para uma regra de atributo.
-    |
-    */
+  /*
+  |--------------------------------------------------------------------------
+  | Linhas de Idioma de Validação Personalizadas
+  |--------------------------------------------------------------------------
+  |
+  | Aqui você pode especificar mensagens de validação personalizadas para atributos usando a
+  | convenção "attribute.rule" para nomear as linhas. Isso torna rápido
+  | especificar uma linha de idioma personalizada específica para uma regra de atributo.
+  |
+  */
 
     'custom' => [
         'attribute-name' => [
@@ -175,15 +175,15 @@ return [
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Atributos de Validação Personalizados
-    |--------------------------------------------------------------------------
-    |
-    | As seguintes linhas de idioma são usadas para trocar nossos marcadores de posição de atributo
-    | com algo mais legível, como "Endereço de E-Mail" em vez de "email". Isso simplesmente nos ajuda a tornar nossa mensagem mais expressiva.
-    |
-    */
+  /*
+  |--------------------------------------------------------------------------
+  | Atributos de Validação Personalizados
+  |--------------------------------------------------------------------------
+  |
+  | As seguintes linhas de idioma são usadas para trocar nossos marcadores de posição de atributo
+  | com algo mais legível, como "Endereço de E-Mail" em vez de "email". Isso simplesmente nos ajuda a tornar nossa mensagem mais expressiva.
+  |
+  */
 
     'attributes' => [],
 
