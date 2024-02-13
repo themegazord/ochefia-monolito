@@ -22,7 +22,10 @@ Route::prefix('cliente')->group(function () {
 Route::prefix('empresa')->group(function () {
   Route::post('cadastro', [\App\Http\Controllers\Empresa\EmpresaController::class, 'store'])->name('empresa.cadastro');
 });
-Route::middleware('auth')->group(function () {
-  Route::get('dashboard', [\App\Http\Controllers\Dashboard\DashboardController::class, 'index'])->name('dashboard');
+Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->group(function () {
+  Route::get('/', [\App\Http\Controllers\Dashboard\DashboardController::class, 'index'])->name('dashboard');
   Route::post('logout', [\App\Http\Controllers\Autenticacao\LoginController::class, 'destroy'])->name('logout');
+  Route::prefix('classe')->group(function () {
+    Route::get('listagem', [\App\Http\Controllers\Estoque\Classe\ClasseController::class, 'index'])->name('classe.listagem');
+  });
 });

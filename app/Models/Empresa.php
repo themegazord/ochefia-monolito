@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 // use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Empresa extends Model
@@ -22,6 +23,10 @@ class Empresa extends Model
   public function funcionario(): HasOne
   {
     return $this->hasOne(Funcionario::class, 'empresa_id', 'empresa_id');
+  }
+
+  public function classe_produto(): HasMany {
+    return $this->hasMany(ClasseProduto::class, 'empresa_id', 'empresa_id');
   }
 
   // public function produto(): HasMany {

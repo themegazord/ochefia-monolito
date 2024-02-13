@@ -19,9 +19,9 @@ class User extends Authenticatable
    * @var array<int, string>
    */
   protected $fillable = [
-      'name',
-      'email',
-      'password',
+    'name',
+    'email',
+    'password',
   ];
 
   /**
@@ -30,8 +30,8 @@ class User extends Authenticatable
    * @var array<int, string>
    */
   protected $hidden = [
-      'password',
-      'remember_token',
+    'password',
+    'remember_token',
   ];
 
   /**
@@ -40,12 +40,17 @@ class User extends Authenticatable
    * @var array<string, string>
    */
   protected $casts = [
-      'email_verified_at' => 'datetime',
-      'password' => 'hashed',
+    'email_verified_at' => 'datetime',
+    'password' => 'hashed',
   ];
 
   public function cliente(): HasOne
   {
     return $this->hasOne(Cliente::class, 'usuario_id', 'id');
+  }
+
+  public function funcionario(): HasOne
+  {
+    return $this->hasOne(Funcionario::class, 'usuario_id', 'id');
   }
 }

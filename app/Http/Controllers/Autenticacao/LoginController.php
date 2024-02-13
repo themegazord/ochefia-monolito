@@ -28,8 +28,16 @@ class LoginController extends Controller
 
   public function store(Request $request): RedirectResponse
   {
+    //TODO fazer a validacao para devolver se a senha e o email condizem
     Auth::attempt($request->only(['email', 'password']), $request->get('manterLogado'));
-    return to_route('dashboard');
+    $usuario = Auth::user();
+    if ($usuario && $usuario->funcionario) {
+      $empresa = $usuario->funcionario->empresa;
+      return redirect($empresa->empresa_cnpj.'/');
+    }
+    dd($usuario, $usuario->funcionario);
+    //TODO criar rota para os clientes logados
+//    return to_route('dashboard');
   }
 
   public function destroy(Request $request): RedirectResponse {
