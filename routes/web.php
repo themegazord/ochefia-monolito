@@ -25,7 +25,11 @@ Route::prefix('empresa')->group(function () {
 Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->group(function () {
   Route::get('/', [\App\Http\Controllers\Dashboard\DashboardController::class, 'index'])->name('dashboard');
   Route::post('logout', [\App\Http\Controllers\Autenticacao\LoginController::class, 'destroy'])->name('logout');
-  Route::prefix('classe')->group(function () {
-    Route::get('listagem', [\App\Http\Controllers\Estoque\Classe\ClasseController::class, 'index'])->name('classe.listagem');
+  Route::prefix('estoque')->group(function () {
+    Route::prefix('classe')->group(function () {
+      Route::get('listagem', [\App\Http\Controllers\Estoque\Classe\ClasseController::class, 'index'])->name('classe.listagem');
+      Route::get('cadastro', [\App\Http\Controllers\Estoque\Classe\ClasseController::class, 'cadastro'])->name('classe.form.cadastro');
+      Route::post('cadastrar', [\App\Http\Controllers\Estoque\Classe\ClasseController::class, 'store'])->name('classe.store');
+    });
   });
 });

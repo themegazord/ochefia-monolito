@@ -37,7 +37,7 @@ export default {
           :prepend-icon="menu.icon"
           class="nav-link"
       >
-        <Link :href="menu.url">{{ menu.label }}</Link>
+        <Link :href="this.$page.url.substring(1, 15) + menu.url">{{ menu.label }}</Link>
       </v-list-item>
       <v-list-group
           v-for="(grupo, subMenuIndex) in subMenus"
@@ -53,7 +53,7 @@ export default {
             :value="subitem.label"
             class="nav-link"
         >
-          <Link :href="subitem.url">{{ subitem.label }}</Link>
+          <Link :href="this.$page.url.substring(1, 15) + subitem.url">{{ subitem.label }}</Link>
         </v-list-item>
       </v-list-group>
       <v-list-item prepend-icon="fas fa-sign-out-alt" class="bg-red" @click="logout">

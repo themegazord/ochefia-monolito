@@ -69,7 +69,7 @@ class EmpresaService
     return $cnpj[13] == ($resto < 2 ? 0 : 11 - $resto);
   }
 
-  private function empresaPorCnpj(string $cnpj): ?Empresa
+  public function empresaPorCnpj(string $cnpj): ?Empresa
   {
     return $this->empresaRepository->empresaPorCNPJ($cnpj);
   }

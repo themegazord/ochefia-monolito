@@ -48,7 +48,8 @@ class AppServiceProvider extends ServiceProvider
     });
     $this->app->scoped(ClasseProdutoService::class, function (Application $app) {
       $classeProdutoRepository = $app->make(IClasseProduto::class);
-      return new ClasseProdutoService($classeProdutoRepository);
+      $empresaService = $app->make(EmpresaService::class);
+      return new ClasseProdutoService($classeProdutoRepository, $empresaService);
     });
   }
 

@@ -1,7 +1,13 @@
 <script>
 import NavbarSistemaComponent from "@/components/Navbar/NavbarSistemaComponent.vue";
 import LoadingComponent from "@/components/Uteis/LoadingComponent.vue";
+import {router} from "@inertiajs/vue3";
 export default {
+  methods: {
+    router() {
+      return router
+    }
+  },
   components: {
     NavbarSistemaComponent,
     LoadingComponent
@@ -43,7 +49,7 @@ export default {
               prepend-icon="fas fa-plus"
               class="criar"
               variant="tonal"
-              @click="$router.push({ path: 'cadastro' })"
+              @click="router().get('cadastro')"
           >Criar</v-btn
           >
         </div>
@@ -70,7 +76,7 @@ export default {
                   density="compact"
                   icon="fas fa-magic"
                   variant="flat"
-                  @click="$router.push({ path: `edicao/${classe.classe_produto_id}` })"
+                  @click=""
               ></v-btn>
               <v-dialog width="500">
                 <template v-slot:activator="{ props }">

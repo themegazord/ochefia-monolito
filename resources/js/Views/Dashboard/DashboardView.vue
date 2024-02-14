@@ -2,6 +2,8 @@
     import { router } from '@inertiajs/vue3'
     import NavbarSistemaComponent from "@/components/Navbar/NavbarSistemaComponent.vue";
     export default {
+      mounted() {
+      },
       props: {
         menus: {
           type: Array,
