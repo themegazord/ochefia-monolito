@@ -33,4 +33,12 @@ class ClasseProdutoService
       'empresa_id' => $this->empresaService->empresaPorCnpj($dados['cnpj'])->getAttribute('empresa_id')
     ]);
   }
+
+  public function consultaClasseProdutoPorId(int $classe_id): ?ClasseProduto {
+    return $this->classeProdutoRepository->classeProdutoPorId($classe_id);
+  }
+
+  public function atualizaClasseProdutoPorEmpresa(array $dados_classe): int {
+    return $this->classeProdutoRepository->atualizaClassePorIdEEmpresa($dados_classe);
+  }
 }

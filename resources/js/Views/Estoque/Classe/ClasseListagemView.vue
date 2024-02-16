@@ -1,6 +1,7 @@
 <script>
 import NavbarSistemaComponent from "@/components/Navbar/NavbarSistemaComponent.vue";
 import LoadingComponent from "@/components/Uteis/LoadingComponent.vue";
+import NotificacaoComponent from "@/components/Uteis/NotificacaoComponent.vue";
 import {router} from "@inertiajs/vue3";
 export default {
   methods: {
@@ -10,7 +11,8 @@ export default {
   },
   components: {
     NavbarSistemaComponent,
-    LoadingComponent
+    LoadingComponent,
+    NotificacaoComponent
   },
   props: {
     menus: {
@@ -38,6 +40,10 @@ export default {
   <v-layout>
     <NavbarSistemaComponent :menus="menus" :subMenus="subMenus" />
     <LoadingComponent :loading="loading"/>
+    <NotificacaoComponent
+        :notificacao="this.$page.props.flash.backendFlashMessage"
+        v-if="this.$page.props.flash.backendFlashMessage"
+    />
     <v-main>
       <div class="container-listagem-classe">
         <h2>
@@ -76,7 +82,7 @@ export default {
                   density="compact"
                   icon="fas fa-magic"
                   variant="flat"
-                  @click=""
+                  @click="router().get(`edicao/${classe.classe_produto_id}`)"
               ></v-btn>
               <v-dialog width="500">
                 <template v-slot:activator="{ props }">

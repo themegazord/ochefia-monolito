@@ -112,7 +112,7 @@ export default {
             </label>
           </v-col>
           <v-col cols="6">
-            <v-btn block size="large" type="submit">Cadastro</v-btn>
+            <v-btn block size="large" type="submit">Login</v-btn>
           </v-col>
         </v-row>
       </form>

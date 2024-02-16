@@ -40,14 +40,14 @@ class ClasseController extends Controller
     ]);
   }
 
-  public function store(Request $request)
+  public function store(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
     try {
       $this->classeProdutoService->cadastroClasseProdutos([
         'classe_produto_nome' => $request->get('classe_produto_nome'),
         'cnpj' => $request->route('cnpj')
       ]);
-      return redirect($request->route('cnpj') . '/classe/cadastro')->with(
+      return redirect($request->route('cnpj') . '/estoque/classe/listagem')->with(
         'bfm',
         [
           'tipo' => 'sucesso',
@@ -56,7 +56,7 @@ class ClasseController extends Controller
         ]
       );
     } catch (EmpresaException $ee) {
-      return redirect($request->route('cnpj') . '/classe/cadastro')->with(
+      return redirect($request->route('cnpj') . '/estoque/classe/cadastro')->with(
         'bfm',
         [
           'tipo' => 'erro',
@@ -64,6 +64,37 @@ class ClasseController extends Controller
           'notificacao' => $ee->getMessage()
         ]
       );
+    }
+  }
+
+  public function edicao(string $cnpj, int $classe_id): Response|ResponseFactory
+  {
+    return inertia('Estoque/Classe/ClasseEditarView', [
+      'menus' => $this->links->getMenus(),
+      'subMenus' => $this->links->getSubMenus(),
+      'classeBanco' => $this->classeProdutoService->consultaClasseProdutoPorId($classe_id)->getAttributes()
+    ]);
+  }
+
+  public function update(Request $request) {
+    try {
+      $this->classeProdutoService->atualizaClasseProdutoPorEmpresa($request->toArray());
+      return redirect($request->route('cnpj') . '/estoque/classe/listagem')->with(
+        'bfm',
+        [
+          'tipo' => 'sucesso',
+          'titulo' => 'Atualicação de classe',
+          'notificacao' => 'Classe atualizada com sucesso'
+        ]
+      );
+    } catch (\Exception $e) {
+      return redirect($request->route('cnpj') . '/estoque/classe/edicao/' . $request->toArray()['classe_produto_id'])->with(
+        'bfm',
+        [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na empresa',
+          'notificacao' => $e->getMessage()
+        ]);
     }
   }
 }

@@ -3,7 +3,7 @@ import NavbarSistemaComponent from "@/components/Navbar/NavbarSistemaComponent.v
 import LoadingComponent from "@/components/Uteis/LoadingComponent.vue";
 import NotificacaoComponent from "@/components/Uteis/NotificacaoComponent.vue";
 import useVuelidate from "@vuelidate/core";
-import {helpers, maxLength, required} from '@vuelidate/validators'
+import {helpers, maxLength, required, url} from '@vuelidate/validators'
 import {router} from "@inertiajs/vue3";
 
 export default {
@@ -21,6 +21,13 @@ export default {
       type: Array,
       required: true
     },
+    classeBanco: {
+      type: Object,
+      required: true
+    }
+  },
+  mounted() {
+    this.classe = Object.assign({}, this.classeBanco)
   },
   data() {
     return {
@@ -34,10 +41,10 @@ export default {
     voltar() {
       return window.history.back();
     },
-    async cadastrar() {
+    async editar() {
       if (await this.v$.classe.$validate()) {
         this.loading = true
-        router.post('cadastrar', this.classe);
+        router.put(`/${this.$page.url.substring(1, 15)}/estoque/classe/editar/${this.classe.classe_produto_id}`, this.classe);
         this.loading = false
       }
     },
@@ -71,8 +78,8 @@ export default {
     />
     <v-main>
       <div class="container-cadastro-classe">
-        <h2>Aqui você poderá cadastrar novas classes de produtos!</h2>
-        <form class="form-cadastro-classe" @submit.prevent="cadastrar">
+        <h2>Aqui você poderá editar novas classes de produtos!</h2>
+        <form class="form-cadastro-classe" @submit.prevent="editar">
           <v-row>
             <v-col cols="6">
               <v-text-field

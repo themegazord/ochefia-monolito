@@ -39,10 +39,11 @@ class ClasseProdutoRepository implements IClasseProduto
       ->first();
   }
 
-  public function atualizaClassePorId(array $classe, int $id): int
+  public function atualizaClassePorIdEEmpresa(array $classe): int
   {
     return ClasseProduto::query()
-      ->where('classe_produto_id', $id)
+      ->where('classe_produto_id', $classe['classe_produto_id'])
+      ->where('empresa_id', $classe['empresa_id'])
       ->update($classe);
   }
 
