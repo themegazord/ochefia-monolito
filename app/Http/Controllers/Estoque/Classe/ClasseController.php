@@ -97,4 +97,27 @@ class ClasseController extends Controller
         ]);
     }
   }
+
+  public function destroy (Request $request, string $cnpj, int $classe_id) {
+    try {
+      $this->classeProdutoService->deletaClassePorId($cnpj, $classe_id);
+      return redirect($request->route('cnpj') . '/estoque/classe/listagem')->with(
+        'bfm',
+        [
+          'tipo' => 'sucesso',
+          'titulo' => 'Remoção feita com sucesso',
+          'notificacao' => 'Classe removida com sucesso'
+        ]
+      );
+    } catch (\Exception $e) {
+      return redirect($request->route('cnpj') . '/estoque/classe/listagem')->with(
+        'bfm',
+        [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na remoção',
+          'notificacao' => $e->getMessage()
+        ]
+      );
+    }
+  }
 }

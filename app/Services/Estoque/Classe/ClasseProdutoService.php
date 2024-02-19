@@ -41,4 +41,9 @@ class ClasseProdutoService
   public function atualizaClasseProdutoPorEmpresa(array $dados_classe): int {
     return $this->classeProdutoRepository->atualizaClassePorIdEEmpresa($dados_classe);
   }
+
+  public function deletaClassePorId(string $cnpj, int $classe_id): mixed {
+    $empresa_id = $this->empresaService->empresaPorCnpj($cnpj)->getAttribute('empresa_id');
+    return $this->classeProdutoRepository->removeClassePorId($empresa_id, $classe_id);
+  }
 }

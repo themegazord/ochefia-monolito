@@ -107,7 +107,7 @@ export default {
                       ></v-btn>
                       <v-btn
                           text="Remover"
-                          @click="remocaoClasseProduto(classe.classe_produto_id)"
+                          @click="router().delete(`deletar/${classe.classe_produto_id}`)"
                           variant="tonal"
                           color="var(--vermilion)"
                           :disabled="indisponivel"
