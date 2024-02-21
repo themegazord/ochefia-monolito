@@ -36,6 +36,8 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
     });
     Route::prefix('fabricante')->group(function () {
       Route::get('listagem', [\App\Http\Controllers\FabricanteProdutoController::class, 'index'])->name('fabricante.listagem');
+      Route::get('cadastro', [\App\Http\Controllers\FabricanteProdutoController::class, 'cadastro'])->name('fabricante.form_cadastro');
+      Route::post('cadastrar', [\App\Http\Controllers\FabricanteProdutoController::class, 'store'])->name('fabricante.store');
     });
   });
 });

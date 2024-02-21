@@ -2,8 +2,14 @@
 import NavbarSistemaComponent from "@/components/Navbar/NavbarSistemaComponent.vue";
 import NotificacaoComponent from "@/components/Uteis/NotificacaoComponent.vue";
 import LoadingComponent from "@/components/Uteis/LoadingComponent.vue";
+import {router} from "@inertiajs/vue3";
 
 export default {
+  methods: {
+    router() {
+      return router
+    }
+  },
   props: {
     menus: {
       type: Array,
@@ -50,7 +56,7 @@ export default {
               prepend-icon="fas fa-plus"
               class="criar"
               variant="tonal"
-              @click="$router.push({ path: 'cadastro' })"
+              @click="router().get('cadastro')"
           >Criar
           </v-btn
           >
