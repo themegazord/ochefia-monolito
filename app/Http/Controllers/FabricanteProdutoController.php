@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\Empresa\EmpresaException;
+use App\Exceptions\Estoque\FabricanteProdutoException;
 use App\Models\FabricanteProduto;
 use App\Services\Estoque\Fabricante\FabricanteProdutoService;
 use App\Utils\States\Navbar\LinksSistema;
@@ -37,7 +38,7 @@ class FabricanteProdutoController extends Controller
   /**
    * Store a newly created resource in storage.
    */
-  public function store(Request $request)
+  public function store(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
     try {
       $this->fabricanteProdutoService->cadastrarFabricantePorEmpresa([
@@ -65,9 +66,37 @@ class FabricanteProdutoController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(FabricanteProduto $fabricanteProduto)
+  public function show(Request $request, string $cnpj, int $fabricante_produto_id)
   {
-    //
+    try {
+      $fabricante = $this->fabricanteProdutoService->consultaFabricantePorEmpresa(
+        [
+          'cnpj' => $cnpj,
+          'fabricante_produto_id' => $fabricante_produto_id
+        ]
+      );
+      return inertia('Estoque/Fabricante/FabricanteEdicaoView', [
+        'menus' => $this->links->getMenus(),
+        'subMenus' => $this->links->getSubMenus(),
+        'fabricanteBanco' => $fabricante
+      ]);
+    } catch (EmpresaException $ee) {
+      return redirect($request->route('cnpj') . '/estoque/fabricante/listagem')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na empresa',
+          'notificacao' => $ee->getMessage()
+        ]
+      ]);
+    } catch (FabricanteProdutoException $fpe) {
+      return redirect($request->route('cnpj') . '/estoque/fabricante/listagem')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro no fabricante',
+          'notificacao' => $fpe->getMessage()
+        ]
+      ]);
+    }
   }
 
   /**

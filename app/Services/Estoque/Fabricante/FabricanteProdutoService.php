@@ -3,6 +3,7 @@
 namespace App\Services\Estoque\Fabricante;
 
 use App\Exceptions\Empresa\EmpresaException;
+use App\Exceptions\Estoque\FabricanteProdutoException;
 use App\Models\FabricanteProduto;
 use App\Repositories\Interfaces\Estoque\Fabricante\IFabricanteProduto;
 use App\Services\Empresa\EmpresaService;
@@ -29,5 +30,19 @@ class FabricanteProdutoService {
       'empresa_id' => $empresa->getAttribute('empresa_id'),
       'fabricante_produto_nome' => $dados['fabricante_produto_nome']
     ]);
+  }
+
+  /**
+   * @throws EmpresaException
+   * @throws FabricanteProdutoException
+   */
+  public function consultaFabricantePorEmpresa(array $dados): FabricanteProduto|EmpresaException|FabricanteProdutoException {
+    $empresa = $this->empresaService->empresaPorCnpj($dados['cnpj']);
+    if (is_null($empresa)) return EmpresaException::CNPJInexistente($dados['cnpj']);
+    $fabricante = $this->fabricanteProdutoRepository->fabricantePorId(
+      $empresa->getAttribute('empresa_id'),
+      $dados['fabricante_produto_id']
+    );
+    return is_null($fabricante) ? FabricanteProdutoException::fabricanteInexiste() : $fabricante;
   }
 }
