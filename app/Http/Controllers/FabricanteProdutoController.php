@@ -102,9 +102,17 @@ class FabricanteProdutoController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, FabricanteProduto $fabricanteProduto)
+  public function update(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
-    //
+    $this->fabricanteProdutoService->editaFabricantePorEmpresa($request->toArray());
+    return redirect($request->route('cnpj') . '/estoque/fabricante/listagem')->with(
+      'bfm',
+      [
+        'tipo' => 'sucesso',
+        'titulo' => 'Atualicação de fabricante',
+        'notificacao' => 'Fabricante atualizado com sucesso'
+      ]
+    );
   }
 
   /**

@@ -76,7 +76,8 @@ class ClasseController extends Controller
     ]);
   }
 
-  public function update(Request $request) {
+  public function update(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
+  {
     try {
       $this->classeProdutoService->atualizaClasseProdutoPorEmpresa($request->toArray());
       return redirect($request->route('cnpj') . '/estoque/classe/listagem')->with(
@@ -98,7 +99,8 @@ class ClasseController extends Controller
     }
   }
 
-  public function destroy (Request $request, string $cnpj, int $classe_id) {
+  public function destroy (Request $request, string $cnpj, int $classe_id): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
+  {
     try {
       $this->classeProdutoService->deletaClassePorId($cnpj, $classe_id);
       return redirect($request->route('cnpj') . '/estoque/classe/listagem')->with(

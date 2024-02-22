@@ -4,8 +4,14 @@ import {useVuelidate} from "@vuelidate/core";
 import LoadingComponent from "@/components/Uteis/LoadingComponent.vue";
 import NotificacaoComponent from "@/components/Uteis/NotificacaoComponent.vue";
 import NavbarSistemaComponent from "@/components/Navbar/NavbarSistemaComponent.vue";
+import {router} from "@inertiajs/vue3";
 
 export default {
+  setup() {
+    return {
+      v$: useVuelidate()
+    }
+  },
   components: {
     NavbarSistemaComponent,
     NotificacaoComponent,
@@ -28,11 +34,6 @@ export default {
   mounted() {
     this.fabricante = Object.assign({}, this.fabricanteBanco)
   },
-  setup() {
-    return {
-      v$: useVuelidate()
-    }
-  },
   data() {
     return {
       loading: false,
@@ -40,6 +41,18 @@ export default {
         fabricante_produto_nome: ''
       },
     }
+  },
+  methods: {
+    voltar() {
+      return window.history.back();
+    },
+    async editar() {
+      if (await this.v$.fabricante.$validate()) {
+        this.loading = true
+        router.put(`/${this.$page.url.substring(1, 15)}/estoque/fabricante/editar/${this.fabricante.fabricante_produto_id}`, this.fabricante);
+        this.loading = false
+      }
+    },
   },
   validations() {
     return {
@@ -92,7 +105,7 @@ export default {
             <v-col cols="12" class="botoes">
               <v-btn
                   variant="tonal"
-                  @click="$router.go(-1)"
+                  @click="voltar"
                   color="var(--vermilion)"
               >Voltar</v-btn
               >

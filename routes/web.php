@@ -39,6 +39,7 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
       Route::get('cadastro', [\App\Http\Controllers\FabricanteProdutoController::class, 'cadastro'])->name('fabricante.form_cadastro');
       Route::post('cadastrar', [\App\Http\Controllers\FabricanteProdutoController::class, 'store'])->name('fabricante.store');
       Route::get('edicao/{fabricante_produto_id}', [\App\Http\Controllers\FabricanteProdutoController::class, 'show'])->name('fabricante.show');
+      Route::put('editar/{fabricante_produto_id}', [\App\Http\Controllers\FabricanteProdutoController::class, 'update'])->name('fabricante.update');
     });
   });
 });

@@ -45,4 +45,8 @@ class FabricanteProdutoService {
     );
     return is_null($fabricante) ? FabricanteProdutoException::fabricanteInexiste() : $fabricante;
   }
+
+  public function editaFabricantePorEmpresa(array $dados): int {
+    return $this->fabricanteProdutoRepository->atualizaFabricantePorEmpresa($dados);
+  }
 }
