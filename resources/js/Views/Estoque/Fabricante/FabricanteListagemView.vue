@@ -8,6 +8,11 @@ export default {
   methods: {
     router() {
       return router
+    },
+    remocao(fabricante_produto_id) {
+      this.loading = true
+      this.router().delete(`deletar/${fabricante_produto_id}`)
+      this.loading = false
     }
   },
   props: {
@@ -33,7 +38,7 @@ export default {
     return {
       loading: false
     }
-  }
+  },
 }
 </script>
 

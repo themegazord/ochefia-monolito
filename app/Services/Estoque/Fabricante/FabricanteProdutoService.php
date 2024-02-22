@@ -49,4 +49,13 @@ class FabricanteProdutoService {
   public function editaFabricantePorEmpresa(array $dados): int {
     return $this->fabricanteProdutoRepository->atualizaFabricantePorEmpresa($dados);
   }
+
+  /**
+   * @throws FabricanteProdutoException
+   * @throws EmpresaException
+   */
+  public function deletaFabricantePorEmpresa(array $dados): mixed {
+    $fabricante = $this->consultaFabricantePorEmpresa($dados);
+    return $this->fabricanteProdutoRepository->removeFabricantePorEmpresa($fabricante->getAttribute('empresa_id'), $fabricante->getAttribute('fabricante_produto_id'));
+  }
 }

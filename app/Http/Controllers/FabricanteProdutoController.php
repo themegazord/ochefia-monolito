@@ -118,8 +118,38 @@ class FabricanteProdutoController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(FabricanteProduto $fabricanteProduto)
+  public function destroy(string $cnpj, int $fabricante_produto_id): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
-    //
+    try {
+      $this->fabricanteProdutoService->deletaFabricantePorEmpresa(
+        [
+          'cnpj' => $cnpj,
+          'fabricante_produto_id' => $fabricante_produto_id
+        ]
+      );
+      return redirect($cnpj . '/estoque/fabricante/listagem')->with([
+        'bfm' => [
+          'tipo' => 'sucesso',
+          'titulo' => 'Remoção de fabricante',
+          'notificacao' => 'Fabricante removido com sucesso'
+        ]
+      ]);
+    } catch (EmpresaException $ee) {
+      return redirect($cnpj . '/estoque/fabricante/listagem')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na empresa',
+          'notificacao' => $ee->getMessage()
+        ]
+      ]);
+    } catch (FabricanteProdutoException $fpe) {
+      return redirect($cnpj . '/estoque/fabricante/listagem')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro no fabricante',
+          'notificacao' => $fpe->getMessage()
+        ]
+      ]);
+    }
   }
 }

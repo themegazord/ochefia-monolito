@@ -50,10 +50,11 @@ class FabricanteProdutoRepository implements IFabricanteProduto
       ->update($fabricante);
   }
 
-  public function removeFabricantePorId(int $id): mixed
+  public function removeFabricantePorEmpresa(int $empresa_id, int $fabricante_produto_id): mixed
   {
     return FabricanteProduto::query()
-      ->where('fabricante_produto_id', $id)
+      ->where('empresa_id', $empresa_id)
+      ->where('fabricante_produto_id', $fabricante_produto_id)
       ->delete();
   }
 }

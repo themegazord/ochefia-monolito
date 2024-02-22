@@ -12,5 +12,5 @@ interface IFabricanteProduto
   public function listagemFabricantes(int $empresa_id): Collection;
   public function fabricantePorId(int $empresa_id, int $fabricante_produto_id): ?FabricanteProduto;
   public function atualizaFabricantePorEmpresa(array $fabricante): int ;
-  public function removeFabricantePorId(int $id): mixed;
+  public function removeFabricantePorEmpresa(int $empresa_id, int $fabricante_produto_id): mixed;
 }
