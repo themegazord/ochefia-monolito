@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Repositories\Interfaces\Estoque\Classe\IClasseProduto;
 use App\Repositories\Interfaces\Estoque\Fabricante\IFabricanteProduto;
+use App\Repositories\Interfaces\Estoque\Grupo\IGrupoProduto;
 use App\Repositories\Repository\Eloquent\Estoque\Classe\ClasseProdutoRepository;
 use App\Repositories\Repository\Eloquent\Estoque\Fabricante\FabricanteProdutoRepository;
+use App\Repositories\Repository\Eloquent\Estoque\Grupo\GrupoProdutoRepository;
 use App\Repositories\Repository\Eloquent\Usuario\UsuarioRepository;
 use App\Repositories\Repository\Eloquent\Cliente\ClienteRepository;
 use App\Repositories\Interfaces\Usuario\IUsuario;
@@ -19,6 +21,7 @@ use App\Services\Cliente\ClienteService;
 use App\Services\Empresa\EmpresaService;
 use App\Services\Estoque\Classe\ClasseProdutoService;
 use App\Services\Estoque\Fabricante\FabricanteProdutoService;
+use App\Services\Estoque\Grupo\GrupoProdutoService;
 use App\Services\Funcionario\FuncionarioService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\App;
@@ -60,6 +63,11 @@ class AppServiceProvider extends ServiceProvider
       $empresaService = $app->make(EmpresaService::class);
       return new FabricanteProdutoService($fabricanteProdutoRepository, $empresaService);
     });
+    $this->app->scoped(GrupoProdutoService::class, function (Application $app) {
+      $grupoProdutoRepository = $app->make(IGrupoProduto::class);
+      $empresaService = $app->make(EmpresaService::class);
+      return new GrupoProdutoService($grupoProdutoRepository, $empresaService);
+    });
   }
 
   /**
@@ -73,5 +81,6 @@ class AppServiceProvider extends ServiceProvider
     $this->app->bind(IFuncionario::class, FuncionarioRepository::class);
     $this->app->bind(IClasseProduto::class, ClasseProdutoRepository::class);
     $this->app->bind(IFabricanteProduto::class, FabricanteProdutoRepository::class);
+    $this->app->bind(IGrupoProduto::class, GrupoProdutoRepository::class);
   }
 }

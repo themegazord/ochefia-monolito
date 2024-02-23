@@ -29,6 +29,14 @@ class Empresa extends Model
     return $this->hasMany(ClasseProduto::class, 'empresa_id', 'empresa_id');
   }
 
+  public function fabricante_produto(): HasMany {
+    return $this->hasMany(FabricanteProduto::class, 'empresa_id', 'empresa_id');
+  }
+
+  public function grupo_produto(): HasMany {
+    return $this->hasMany(GrupoProduto::class, 'empresa_id', 'empresa_id');
+  }
+
   // public function produto(): HasMany {
   //     return $this->hasMany(Produto::class, 'empresa_id', 'empresa_id');
   // }

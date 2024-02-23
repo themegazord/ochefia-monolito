@@ -42,5 +42,8 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
       Route::put('editar/{fabricante_produto_id}', [\App\Http\Controllers\FabricanteProdutoController::class, 'update'])->name('fabricante.update');
       Route::delete('deletar/{fabricante_produto_id}', [\App\Http\Controllers\FabricanteProdutoController::class, 'destroy'])->name('fabricante.destroy');
     });
+    Route::prefix('grupo')->group(function () {
+      Route::get('listagem', [\App\Http\Controllers\GrupoProdutoController::class, 'index'])->name('grupo.listagem');
+    });
   });
 });
