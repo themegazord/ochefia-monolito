@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enum\Estoque\Grupo\TipoGrupoEnum;
 use App\Exceptions\Empresa\EmpresaException;
+use App\Exceptions\Estoque\GrupoProdutoException;
 use App\Models\GrupoProduto;
 use App\Services\Estoque\Grupo\GrupoProdutoService;
 use App\Utils\States\Navbar\LinksSistema;
@@ -84,16 +85,34 @@ class GrupoProdutoController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request)
+  public function update(Request $request, string $cnpj)
   {
-    $this->grupoProdutoService->editarGrupoPorEmpresa($request->toArray());
-    return redirect($request->route('cnpj') . '/estoque/grupo/listagem')->with([
-      'bfm' => [
-        'tipo' => 'sucesso',
-        'titulo' => 'Edição de grupo',
-        'notificacao' => 'Grupo editado com sucesso'
-      ]
-    ]);
+    try {
+      $this->grupoProdutoService->editarGrupoPorEmpresa($request->toArray(), $cnpj);
+      return redirect($request->route('cnpj') . '/estoque/grupo/listagem')->with([
+        'bfm' => [
+          'tipo' => 'sucesso',
+          'titulo' => 'Edição de grupo',
+          'notificacao' => 'Grupo editado com sucesso'
+        ]
+      ]);
+    } catch (EmpresaException $ee) {
+      return redirect($request->route('cnpj') . '/estoque/grupo/edicao/' . $request->get('grupo_produto_id'))->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na empresa',
+          'notificacao' => $ee->getMessage()
+        ]
+      ]);
+    } catch (GrupoProdutoException $gpe) {
+      return redirect($request->route('cnpj') . '/estoque/grupo/edicao/' . $request->get('grupo_produto_id'))->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro no grupo',
+          'notificacao' => $gpe->getMessage()
+        ]
+      ]);
+    }
   }
 
   /**

@@ -3,6 +3,7 @@
 namespace App\Services\Estoque\Grupo;
 
 use App\Exceptions\Empresa\EmpresaException;
+use App\Exceptions\Estoque\GrupoProdutoException;
 use App\Models\GrupoProduto;
 use App\Repositories\Interfaces\Estoque\Grupo\IGrupoProduto;
 use App\Services\Empresa\EmpresaService;
@@ -32,14 +33,21 @@ class GrupoProdutoService
 
   /**
    * @throws EmpresaException
+   * @throws GrupoProdutoException
    */
   public function consultaGrupoPorEmpresa(string $cnpj, int $grupo_produto_id): array|EmpresaException {
     $empresa = $this->empresaService->empresaPorCnpj($cnpj);
     if (is_null($empresa)) return EmpresaException::CNPJInexistente($cnpj);
-    return $this->grupoProdutoRepository->grupoPorEmpresa($empresa->getAttribute('empresa_id'), $grupo_produto_id)->toArray();
+    $grupo = $this->grupoProdutoRepository->grupoPorEmpresa($empresa->getAttribute('empresa_id'), $grupo_produto_id)->toArray();
+    return (is_null($grupo)) ? GrupoProdutoException::grupoNaoExiste() : $grupo ;
   }
 
-  public function editarGrupoPorEmpresa(array $dadosGrupo): int {
+  /**
+   * @throws GrupoProdutoException
+   * @throws EmpresaException
+   */
+  public function editarGrupoPorEmpresa(array $dadosGrupo, string $cnpj): int {
+    $this->consultaGrupoPorEmpresa($cnpj, $dadosGrupo['grupo_produto_id']);
     return $this->grupoProdutoRepository->edicaoGrupoPorEmpresa($dadosGrupo);
   }
 }
