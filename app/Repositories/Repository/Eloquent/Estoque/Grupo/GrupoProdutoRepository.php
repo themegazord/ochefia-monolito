@@ -54,10 +54,11 @@ class GrupoProdutoRepository implements IGrupoProduto
       ->update($grupo);
   }
 
-  public function deletaGrupoPorId(int $id): mixed
+  public function deletaGrupoPorEmpresa(int $empresa_id, int $grupo_produto_id): mixed
   {
     return GrupoProduto::query()
-      ->where('grupo_produto_id', $id)
+      ->where('empresa_id', $empresa_id)
+      ->where('grupo_produto_id', $grupo_produto_id)
       ->delete();
   }
 }

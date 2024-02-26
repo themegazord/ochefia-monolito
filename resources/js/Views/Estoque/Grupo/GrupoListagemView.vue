@@ -8,7 +8,12 @@ export default {
   methods: {
     router() {
       return router
-    }
+    },
+    remocaoGrupoProduto(grupoId) {
+      this.loading = true
+      this.router().delete(`deletar/${grupoId}`)
+      this.loading = false
+    },
   },
   components: {
     NavbarSistemaComponent,

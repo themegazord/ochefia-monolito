@@ -17,5 +17,5 @@ interface IGrupoProduto
 
   public function edicaoGrupoPorEmpresa(array $grupo): int;
 
-  public function deletaGrupoPorId(int $id): mixed;
+  public function deletaGrupoPorEmpresa(int $empresa_id, int $grupo_produto_id): mixed;
 }

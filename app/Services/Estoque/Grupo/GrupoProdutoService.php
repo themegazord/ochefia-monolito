@@ -50,4 +50,13 @@ class GrupoProdutoService
     $this->consultaGrupoPorEmpresa($cnpj, $dadosGrupo['grupo_produto_id']);
     return $this->grupoProdutoRepository->edicaoGrupoPorEmpresa($dadosGrupo);
   }
+
+  /**
+   * @throws GrupoProdutoException
+   * @throws EmpresaException
+   */
+  public function removerGrupoPorEmpresa(string $cnpj, int $grupo_produto_id): mixed {
+    $grupo = $this->consultaGrupoPorEmpresa($cnpj, $grupo_produto_id);
+    return $this->grupoProdutoRepository->deletaGrupoPorEmpresa($grupo[0]['empresa_id'], $grupo_produto_id);
+  }
 }

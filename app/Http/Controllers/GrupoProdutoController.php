@@ -85,7 +85,7 @@ class GrupoProdutoController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $cnpj)
+  public function update(Request $request, string $cnpj): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
     try {
       $this->grupoProdutoService->editarGrupoPorEmpresa($request->toArray(), $cnpj);
@@ -118,8 +118,33 @@ class GrupoProdutoController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(GrupoProduto $grupoProduto)
+  public function destroy(string $cnpj, int $grupo_produto_id)
   {
-    //
+    try {
+      $this->grupoProdutoService->removerGrupoPorEmpresa($cnpj, $grupo_produto_id);
+      return redirect($cnpj . '/estoque/grupo/listagem')->with([
+        'bfm' => [
+          'tipo' => 'sucesso',
+          'titulo' => 'Remoção do grupo',
+          'notificacao' => 'Grupo removido com sucesso'
+        ]
+      ]);
+    } catch (EmpresaException $ee) {
+      return redirect($cnpj . '/estoque/grupo/listagem')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na empresa',
+          'notificacao' => $ee->getMessage()
+        ]
+      ]);
+    } catch (GrupoProdutoException $gpe) {
+      return redirect($cnpj . '/estoque/grupo/listagem')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro no grupo',
+          'notificacao' => $gpe->getMessage()
+        ]
+      ]);
+    }
   }
 }
