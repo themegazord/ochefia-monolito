@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Casts\Estoque\Grupo\Tipos;
+use App\Enum\Estoque\Grupo\TipoGrupoEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,7 +20,11 @@ class GrupoProduto extends Model
       'grupo_produto_tipo'
     ];
 
+    protected $casts = [
+      'grupo_produto_tipo' => Tipos::class
+    ];
+
     public function empresa(): BelongsTo {
-      $this->belongsTo(Empresa::class, 'empresa_id', 'empresa_id');
+      return $this->belongsTo(Empresa::class, 'empresa_id', 'empresa_id');
     }
 }
