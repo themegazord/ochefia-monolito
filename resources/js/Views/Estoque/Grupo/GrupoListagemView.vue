@@ -69,7 +69,7 @@ export default {
             <td>{{ grupo.grupo_produto_tipo }}</td>
             <td class="acoes">
               <v-btn density="compact" icon="fas fa-magic" variant="flat"
-                     @click="$router.push({ path: `edicao/${grupo.grupo_produto_id}` })"></v-btn>
+                     @click="router().get(`edicao/${grupo.grupo_produto_id}`)"></v-btn>
               <v-dialog width="500">
                 <template v-slot:activator="{ props }">
                   <v-btn density="compact" icon="fas fa-trash" variant="flat" v-bind="props"></v-btn>

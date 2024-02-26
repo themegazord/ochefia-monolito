@@ -46,6 +46,8 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
       Route::get('listagem', [\App\Http\Controllers\GrupoProdutoController::class, 'index'])->name('grupo.listagem');
       Route::get('cadastro', [\App\Http\Controllers\GrupoProdutoController::class, 'cadastro'])->name('grupo.form_cadastro');
       Route::post('cadastrar', [\App\Http\Controllers\GrupoProdutoController::class, 'store'])->name('grupo.store');
+      Route::get('edicao/{grupo_produto_id}', [\App\Http\Controllers\GrupoProdutoController::class, 'show'])->name('grupo.show');
+      Route::put('editar/{grupo_produto_id}', [\App\Http\Controllers\GrupoProdutoController::class, 'update'])->name('grupo.update');
     });
   });
 });

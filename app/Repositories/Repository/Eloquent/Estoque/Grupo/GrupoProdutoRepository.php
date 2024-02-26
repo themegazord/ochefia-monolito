@@ -28,6 +28,7 @@ class GrupoProdutoRepository implements IGrupoProduto
       ->where('empresa_id', $empresa_id)
       ->where('grupo_produto_id', $grupo_produto_id)
       ->get([
+        'empresa_id',
         'grupo_produto_id',
         'grupo_produto_nome',
         'grupo_produto_tipo'
@@ -45,10 +46,11 @@ class GrupoProdutoRepository implements IGrupoProduto
       ]);
   }
 
-  public function edicaoGrupoPorId(array $grupo, int $id): int
+  public function edicaoGrupoPorEmpresa(array $grupo): int
   {
     return GrupoProduto::query()
-      ->where('grupo_produto_id', $id)
+      ->where('empresa_id', $grupo['empresa_id'])
+      ->where('grupo_produto_id', $grupo['grupo_produto_id'])
       ->update($grupo);
   }
 

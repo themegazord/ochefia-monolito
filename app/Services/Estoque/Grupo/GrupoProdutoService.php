@@ -29,4 +29,17 @@ class GrupoProdutoService
     $dadosGrupo['empresa_id'] = $empresa->getAttribute('empresa_id');
     return $this->grupoProdutoRepository->cadastro($dadosGrupo);
   }
+
+  /**
+   * @throws EmpresaException
+   */
+  public function consultaGrupoPorEmpresa(string $cnpj, int $grupo_produto_id): array|EmpresaException {
+    $empresa = $this->empresaService->empresaPorCnpj($cnpj);
+    if (is_null($empresa)) return EmpresaException::CNPJInexistente($cnpj);
+    return $this->grupoProdutoRepository->grupoPorEmpresa($empresa->getAttribute('empresa_id'), $grupo_produto_id)->toArray();
+  }
+
+  public function editarGrupoPorEmpresa(array $dadosGrupo): int {
+    return $this->grupoProdutoRepository->edicaoGrupoPorEmpresa($dadosGrupo);
+  }
 }

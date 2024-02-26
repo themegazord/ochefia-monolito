@@ -1,0 +1,161 @@
+<script>
+import {useVuelidate} from "@vuelidate/core";
+import NavbarSistemaComponent from "@/components/Navbar/NavbarSistemaComponent.vue";
+import NotificacaoComponent from "@/components/Uteis/NotificacaoComponent.vue";
+import LoadingComponent from "@/components/Uteis/LoadingComponent.vue";
+import {helpers, maxLength, required} from "@vuelidate/validators";
+import {router} from "@inertiajs/vue3";
+
+export default {
+  setup() {
+    return {
+      v$: useVuelidate()
+    }
+  },
+  components: {
+    NavbarSistemaComponent,
+    NotificacaoComponent,
+    LoadingComponent
+  },
+  props: {
+    menus: {
+      type: Array,
+      required: true
+    },
+    subMenus: {
+      type: Array,
+      required: true
+    },
+    tiposGrupo: {
+      type: Object,
+      required: true
+    },
+    grupoBanco: {
+      type: Object,
+      required: true
+    }
+  },
+  mounted() {
+    for(let index in Object.assign({}, this.tiposGrupo)) {
+      this.tipos.push({
+        tipo: this.tiposGrupo[index],
+        tipo_abbr: index
+      })
+    }
+
+    this.grupo = Object.assign({}, ...this.grupoBanco)
+  },
+  data() {
+    return {
+      loading: false,
+      tipos: [],
+      grupo: {
+        grupo_produto_nome: '',
+        grupo_produto_tipo: ''
+      }
+    }
+  },
+  methods: {
+    voltar() {
+      return window.history.back()
+    },
+    async edicao() {
+      if (await this.v$.grupo.$validate()) {
+        this.loading = true
+        if (!Object.keys(this.tiposGrupo).includes(this.grupo.grupo_produto_tipo)) {
+          const chaveEncontrada = Object.keys(this.tiposGrupo).find(chave => this.tiposGrupo[chave] === this.grupo.grupo_produto_tipo);
+          if (chaveEncontrada) {
+            this.grupo.grupo_produto_tipo = chaveEncontrada;
+          }
+        }
+        router.put(`/${this.$page.url.substring(1, 15)}/estoque/grupo/editar/${this.grupo.grupo_produto_id}`, this.grupo)
+        this.loading = false
+      }
+    }
+  },
+  validations() {
+    return {
+      grupo: {
+        grupo_produto_nome: {
+          required: helpers.withMessage('O campo do nome do produto é obrigatório', required),
+          maxLength: helpers.withMessage('O nome deve conter até 30 caracteres', maxLength(30))
+        }
+      }
+    }
+  }
+}
+</script>
+
+<template>
+  <v-layout>
+    <NavbarSistemaComponent :menus="menus" :subMenus="subMenus" />
+    <NotificacaoComponent
+        :notificacao="this.$page.props.flash.backendFlashMessage"
+        v-if="this.$page.props.flash.backendFlashMessage"
+    />
+    <LoadingComponent :loading="loading" />
+    <v-main>
+      <div class="container-cadastro-grupo">
+        <h2>Aqui você poderá cadastrar novos grupos de produtos!</h2>
+        <form class="form-cadastro-grupo" @submit.prevent="edicao">
+          <v-row>
+            <v-col cols="6">
+              <v-text-field
+                  type="text"
+                  v-model="grupo.grupo_produto_nome"
+                  :error-messages="v$.grupo.grupo_produto_nome.$errors.map((e) => e.$message)"
+                  counter="30"
+                  label="Insira o nome do grupo"
+                  @input="v$.grupo.grupo_produto_nome.$touch"
+                  @blur="v$.grupo.grupo_produto_nome.$touch"
+              ></v-text-field
+              ></v-col>
+            <v-col cols="6">
+              <v-select
+                  :items="tipos"
+                  item-title="tipo"
+                  item-value="tipo_abbr"
+                  label="Insira o tipo do grupo"
+                  v-model="grupo.grupo_produto_tipo"
+              ></v-select
+              ></v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" class="botoes">
+              <v-btn
+                  variant="tonal"
+                  @click="voltar"
+                  color="var(--vermilion)"
+              >Voltar</v-btn
+              >
+              <v-btn
+                  variant="tonal"
+                  type="submit"
+                  color="var(--green-confirm)"
+              >Salvar</v-btn
+              >
+            </v-col>
+          </v-row>
+        </form>
+      </div>
+    </v-main>
+  </v-layout>
+</template>
+
+<style scoped>
+.container-cadastro-grupo {
+  padding: 4rem;
+  font-family: 'Poppins', sans-serif;
+  width: 90%;
+}
+
+.form-cadastro-grupo {
+  padding: 3rem;
+}
+
+.botoes {
+  display: flex;
+  gap: 1rem;
+  justify-content: end;
+}
+</style>

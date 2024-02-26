@@ -13,9 +13,10 @@ class GrupoProdutoController extends Controller
 {
   public function __construct(
     private readonly GrupoProdutoService $grupoProdutoService,
-    private readonly LinksSistema $links,
+    private readonly LinksSistema        $links,
   )
-  {}
+  {
+  }
 
   public function index(string $cnpj): \Inertia\Response|\Inertia\ResponseFactory
   {
@@ -58,19 +59,41 @@ class GrupoProdutoController extends Controller
   }
 
   /**
-   * Display the specified resource.
+   * @throws EmpresaException
    */
-  public function show(GrupoProduto $grupoProduto)
+  public function show(string $cnpj, int $grupo_produto_id): \Illuminate\Contracts\Foundation\Application|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Inertia\Response|\Inertia\ResponseFactory
   {
-    //
+    try {
+      return inertia('Estoque/Grupo/GrupoEdicaoView', [
+        'menus' => $this->links->getMenus(),
+        'subMenus' => $this->links->getSubMenus(),
+        'tiposGrupo' => TipoGrupoEnum::toArray(),
+        'grupoBanco' => $this->grupoProdutoService->consultaGrupoPorEmpresa($cnpj, $grupo_produto_id)
+      ]);
+    } catch (EmpresaException $ee) {
+      return redirect($cnpj . '/estoque/grupo/listagem')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na empresa',
+          'notificacao' => $ee->getMessage()
+        ]
+      ]);
+    }
   }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, GrupoProduto $grupoProduto)
+  public function update(Request $request)
   {
-    //
+    $this->grupoProdutoService->editarGrupoPorEmpresa($request->toArray());
+    return redirect($request->route('cnpj') . '/estoque/grupo/listagem')->with([
+      'bfm' => [
+        'tipo' => 'sucesso',
+        'titulo' => 'Edição de grupo',
+        'notificacao' => 'Grupo editado com sucesso'
+      ]
+    ]);
   }
 
   /**
