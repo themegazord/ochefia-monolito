@@ -2,8 +2,14 @@
 import NavbarSistemaComponent from "@/components/Navbar/NavbarSistemaComponent.vue";
 import NotificacaoComponent from "@/components/Uteis/NotificacaoComponent.vue";
 import LoadingComponent from "@/components/Uteis/LoadingComponent.vue";
+import {router} from "@inertiajs/vue3";
 
 export default {
+  methods: {
+    router() {
+      return router
+    }
+  },
   components: {
     NavbarSistemaComponent,
     NotificacaoComponent,
@@ -44,7 +50,7 @@ export default {
         <h2>Aqui, você vai ver seus grupos cadastrados e poderá editá-los, excluí-los ou criar novos grupos.</h2>
         <div class="container-cadastro-grupo">
           <v-btn prepend-icon="fas fa-plus" class="criar" variant="tonal"
-                 @click="$router.push({ path: 'cadastro' })">Criar
+                 @click="router().get('cadastro' )">Criar
           </v-btn>
         </div>
         <v-table density="compact" fixed-header height="400" v-if="grupos.length != 0" class="">
