@@ -1,20 +1,27 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Estoque\Grupo;
 
+use App\Casts\Estoque\Grupo\Tipos;
+use App\Models\Empresa\Empresa;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class FabricanteProduto extends Model
+class GrupoProduto extends Model
 {
     use HasFactory;
 
-    protected $table = 'fabricante_produto';
+    protected $table = 'grupo_produto';
 
     protected $fillable = [
       'empresa_id',
-      'fabricante_produto_nome'
+      'grupo_produto_nome',
+      'grupo_produto_tipo'
+    ];
+
+    protected $casts = [
+      'grupo_produto_tipo' => Tipos::class
     ];
 
     public function empresa(): BelongsTo {

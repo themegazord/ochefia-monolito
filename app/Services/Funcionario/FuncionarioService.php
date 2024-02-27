@@ -4,8 +4,8 @@ namespace App\Services\Funcionario;
 
 use App\Exceptions\Autenticacao\AutenticacaoException;
 use App\Exceptions\Funcionario\FuncionarioException;
-use App\Models\Funcionario;
-use App\Models\User;
+use App\Models\Autenticacao\User;
+use App\Models\Funcionario\Funcionario;
 use App\Repositories\Interfaces\Funcionario\IFuncionario;
 use App\Services\Autenticacao\CadastroService;
 use App\Services\Empresa\EmpresaService;

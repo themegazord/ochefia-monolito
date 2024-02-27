@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Repository\Eloquent\Usuario;
 
-use App\Models\User;
+use App\Models\Autenticacao\User;
 use App\Repositories\Interfaces\Usuario\IUsuario;
 
 class UsuarioRepository implements IUsuario

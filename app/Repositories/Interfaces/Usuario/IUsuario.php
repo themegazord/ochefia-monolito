@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces\Usuario;
 
-use App\Models\User;
+use App\Models\Autenticacao\User;
 
 interface IUsuario
 {

@@ -3,7 +3,7 @@
 namespace App\Services\Estoque\Classe;
 
 use App\Exceptions\Empresa\EmpresaException;
-use App\Models\ClasseProduto;
+use App\Models\Estoque\Classe\ClasseProduto;
 use App\Repositories\Interfaces\Estoque\Classe\IClasseProduto;
 use App\Services\Empresa\EmpresaService;
 

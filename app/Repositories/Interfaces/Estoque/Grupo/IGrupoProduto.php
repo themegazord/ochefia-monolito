@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces\Estoque\Grupo;
 
-use App\Models\GrupoProduto;
+use App\Models\Estoque\Grupo\GrupoProduto;
 use Illuminate\Support\Collection;
 
 interface IGrupoProduto

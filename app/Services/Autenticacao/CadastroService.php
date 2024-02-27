@@ -3,7 +3,7 @@
 namespace App\Services\Autenticacao;
 
 use App\Exceptions\Autenticacao\AutenticacaoException;
-use App\Models\User;
+use App\Models\Autenticacao\User;
 use App\Repositories\Interfaces\Usuario\IUsuario;
 use Illuminate\Support\Facades\Hash;
 

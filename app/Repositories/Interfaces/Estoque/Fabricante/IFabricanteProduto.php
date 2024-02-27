@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces\Estoque\Fabricante;
 
-use App\Models\FabricanteProduto;
+use App\Models\Estoque\Fabricante\FabricanteProduto;
 use Illuminate\Support\Collection;
 
 interface IFabricanteProduto

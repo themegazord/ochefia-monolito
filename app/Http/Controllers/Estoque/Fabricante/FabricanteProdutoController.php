@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Estoque\Fabricante;
 
 use App\Exceptions\Empresa\EmpresaException;
 use App\Exceptions\Estoque\FabricanteProdutoException;
-use App\Models\FabricanteProduto;
+use App\Http\Controllers\Controller;
 use App\Services\Estoque\Fabricante\FabricanteProdutoService;
 use App\Utils\States\Navbar\LinksSistema;
 use Illuminate\Http\Request;

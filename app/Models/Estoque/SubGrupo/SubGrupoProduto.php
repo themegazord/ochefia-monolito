@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Estoque\SubGrupo;
 
+use App\Models\Empresa\Empresa;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ClasseProduto extends Model
+class SubGrupoProduto extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $table = 'classe_produto';
+  protected $table = 'subgrupo_produto';
 
   protected $fillable = [
     'empresa_id',
-    'classe_produto_nome'
+    'subgrupo_produto_nome'
   ];
 
   public function empresa(): BelongsTo {
@@ -22,6 +23,6 @@ class ClasseProduto extends Model
   }
 
 //  public function produto(): HasMany {
-//    return $this->hasMany(Produto::class, 'classe_produto_id', 'classe_produto_id');
+//    return $this->hasMany(Produto::class, 'subgrupo_produto_id', 'subgrupo_produto_id');
 //  }
 }

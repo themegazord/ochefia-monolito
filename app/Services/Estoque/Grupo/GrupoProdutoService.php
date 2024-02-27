@@ -4,7 +4,7 @@ namespace App\Services\Estoque\Grupo;
 
 use App\Exceptions\Empresa\EmpresaException;
 use App\Exceptions\Estoque\GrupoProdutoException;
-use App\Models\GrupoProduto;
+use App\Models\Estoque\Grupo\GrupoProduto;
 use App\Repositories\Interfaces\Estoque\Grupo\IGrupoProduto;
 use App\Services\Empresa\EmpresaService;
 

@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Repository\Eloquent\Estoque\Grupo;
 
-use App\Models\GrupoProduto;
+use App\Models\Estoque\Grupo\GrupoProduto;
 use App\Repositories\Interfaces\Estoque\Grupo\IGrupoProduto;
 use Illuminate\Support\Collection;
 

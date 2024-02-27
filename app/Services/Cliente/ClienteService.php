@@ -4,8 +4,8 @@ namespace App\Services\Cliente;
 
 use App\Exceptions\Autenticacao\AutenticacaoException;
 use App\Exceptions\Cliente\ClienteException;
-use App\Models\Cliente;
-use App\Models\User;
+use App\Models\Autenticacao\User;
+use App\Models\Cliente\Cliente;
 use App\Repositories\Interfaces\Cliente\ICliente;
 use App\Services\Autenticacao\CadastroService;
 

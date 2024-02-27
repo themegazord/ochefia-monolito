@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Funcionario;
 
+use App\Models\Autenticacao\User;
+use App\Models\Empresa\Empresa;
+use App\Models\Endereco\Endereco;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

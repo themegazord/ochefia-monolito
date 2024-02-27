@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Repository\Eloquent\Estoque\Fabricante;
 
-use App\Models\FabricanteProduto;
+use App\Models\Estoque\Fabricante\FabricanteProduto;
 use App\Repositories\Interfaces\Estoque\Fabricante\IFabricanteProduto;
 
 class FabricanteProdutoRepository implements IFabricanteProduto

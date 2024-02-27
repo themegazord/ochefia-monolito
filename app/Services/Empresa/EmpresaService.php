@@ -3,7 +3,7 @@
 namespace App\Services\Empresa;
 
 use App\Exceptions\Empresa\EmpresaException;
-use App\Models\Empresa;
+use App\Models\Empresa\Empresa;
 use App\Repositories\Interfaces\Empresa\IEmpresa;
 use Illuminate\Http\UploadedFile;
 

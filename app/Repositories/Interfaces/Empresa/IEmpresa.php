@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces\Empresa;
 
-use App\Models\Empresa;
+use App\Models\Empresa\Empresa;
 
 interface IEmpresa
 {

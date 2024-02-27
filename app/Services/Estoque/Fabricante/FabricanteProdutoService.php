@@ -4,7 +4,7 @@ namespace App\Services\Estoque\Fabricante;
 
 use App\Exceptions\Empresa\EmpresaException;
 use App\Exceptions\Estoque\FabricanteProdutoException;
-use App\Models\FabricanteProduto;
+use App\Models\Estoque\Fabricante\FabricanteProduto;
 use App\Repositories\Interfaces\Estoque\Fabricante\IFabricanteProduto;
 use App\Services\Empresa\EmpresaService;
 

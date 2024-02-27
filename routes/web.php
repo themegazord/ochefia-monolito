@@ -35,20 +35,23 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
       Route::delete('deletar/{classe_id}', [\App\Http\Controllers\Estoque\Classe\ClasseController::class, 'destroy'])->name('classe.destroy');
     });
     Route::prefix('fabricante')->group(function () {
-      Route::get('listagem', [\App\Http\Controllers\FabricanteProdutoController::class, 'index'])->name('fabricante.listagem');
-      Route::get('cadastro', [\App\Http\Controllers\FabricanteProdutoController::class, 'cadastro'])->name('fabricante.form_cadastro');
-      Route::post('cadastrar', [\App\Http\Controllers\FabricanteProdutoController::class, 'store'])->name('fabricante.store');
-      Route::get('edicao/{fabricante_produto_id}', [\App\Http\Controllers\FabricanteProdutoController::class, 'show'])->name('fabricante.show');
-      Route::put('editar/{fabricante_produto_id}', [\App\Http\Controllers\FabricanteProdutoController::class, 'update'])->name('fabricante.update');
-      Route::delete('deletar/{fabricante_produto_id}', [\App\Http\Controllers\FabricanteProdutoController::class, 'destroy'])->name('fabricante.destroy');
+      Route::get('listagem', [\App\Http\Controllers\Estoque\Fabricante\FabricanteProdutoController::class, 'index'])->name('fabricante.listagem');
+      Route::get('cadastro', [\App\Http\Controllers\Estoque\Fabricante\FabricanteProdutoController::class, 'cadastro'])->name('fabricante.form_cadastro');
+      Route::post('cadastrar', [\App\Http\Controllers\Estoque\Fabricante\FabricanteProdutoController::class, 'store'])->name('fabricante.store');
+      Route::get('edicao/{fabricante_produto_id}', [\App\Http\Controllers\Estoque\Fabricante\FabricanteProdutoController::class, 'show'])->name('fabricante.show');
+      Route::put('editar/{fabricante_produto_id}', [\App\Http\Controllers\Estoque\Fabricante\FabricanteProdutoController::class, 'update'])->name('fabricante.update');
+      Route::delete('deletar/{fabricante_produto_id}', [\App\Http\Controllers\Estoque\Fabricante\FabricanteProdutoController::class, 'destroy'])->name('fabricante.destroy');
     });
     Route::prefix('grupo')->group(function () {
-      Route::get('listagem', [\App\Http\Controllers\GrupoProdutoController::class, 'index'])->name('grupo.listagem');
-      Route::get('cadastro', [\App\Http\Controllers\GrupoProdutoController::class, 'cadastro'])->name('grupo.form_cadastro');
-      Route::post('cadastrar', [\App\Http\Controllers\GrupoProdutoController::class, 'store'])->name('grupo.store');
-      Route::get('edicao/{grupo_produto_id}', [\App\Http\Controllers\GrupoProdutoController::class, 'show'])->name('grupo.show');
-      Route::put('editar/{grupo_produto_id}', [\App\Http\Controllers\GrupoProdutoController::class, 'update'])->name('grupo.update');
-      Route::delete('deletar/{grupo_produto_id}', [\App\Http\Controllers\GrupoProdutoController::class, 'destroy'])->name('grupo.destroy');
+      Route::get('listagem', [\App\Http\Controllers\Estoque\Grupo\GrupoProdutoController::class, 'index'])->name('grupo.listagem');
+      Route::get('cadastro', [\App\Http\Controllers\Estoque\Grupo\GrupoProdutoController::class, 'cadastro'])->name('grupo.form_cadastro');
+      Route::post('cadastrar', [\App\Http\Controllers\Estoque\Grupo\GrupoProdutoController::class, 'store'])->name('grupo.store');
+      Route::get('edicao/{grupo_produto_id}', [\App\Http\Controllers\Estoque\Grupo\GrupoProdutoController::class, 'show'])->name('grupo.show');
+      Route::put('editar/{grupo_produto_id}', [\App\Http\Controllers\Estoque\Grupo\GrupoProdutoController::class, 'update'])->name('grupo.update');
+      Route::delete('deletar/{grupo_produto_id}', [\App\Http\Controllers\Estoque\Grupo\GrupoProdutoController::class, 'destroy'])->name('grupo.destroy');
+    });
+    Route::prefix('subgrupo')->group(function () {
+      Route::get('listagem', [\App\Http\Controllers\Estoque\SubGrupo\SubGrupoController::class, 'index'])->name('subgrupo.listagem');
     });
   });
 });

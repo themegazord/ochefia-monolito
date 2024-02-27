@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Estoque\Grupo;
 
 use App\Enum\Estoque\Grupo\TipoGrupoEnum;
 use App\Exceptions\Empresa\EmpresaException;
 use App\Exceptions\Estoque\GrupoProdutoException;
-use App\Models\GrupoProduto;
+use App\Http\Controllers\Controller;
 use App\Services\Estoque\Grupo\GrupoProdutoService;
 use App\Utils\States\Navbar\LinksSistema;
 use Illuminate\Http\Request;

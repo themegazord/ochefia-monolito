@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Repository\Eloquent\Funcionario;
 
-use App\Models\Funcionario;
+use App\Models\Funcionario\Funcionario;
 use App\Repositories\Interfaces\Funcionario\IFuncionario;
 use Illuminate\Database\Eloquent\Collection;
 

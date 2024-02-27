@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Repository\Eloquent\Empresa;
 
-use App\Models\Empresa;
+use App\Models\Empresa\Empresa;
 use App\Repositories\Interfaces\Empresa\IEmpresa;
 
 class EmpresaRepository implements IEmpresa

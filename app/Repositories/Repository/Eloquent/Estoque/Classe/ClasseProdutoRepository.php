@@ -2,9 +2,8 @@
 
 namespace App\Repositories\Repository\Eloquent\Estoque\Classe;
 
-use App\Models\ClasseProduto;
+use App\Models\Estoque\Classe\ClasseProduto;
 use App\Repositories\Interfaces\Estoque\Classe\IClasseProduto;
-use Illuminate\Database\Eloquent\Collection;
 
 class ClasseProdutoRepository implements IClasseProduto
 {

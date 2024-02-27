@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Repository\Eloquent\Cliente;
 
-use App\Models\Cliente;
+use App\Models\Cliente\Cliente;
 use App\Repositories\Interfaces\Cliente\ICliente;
 use Illuminate\Database\Eloquent\Model;
 

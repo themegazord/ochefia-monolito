@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces\Estoque\Classe;
 
-use App\Models\ClasseProduto;
+use App\Models\Estoque\Classe\ClasseProduto;
 
 interface IClasseProduto
 {
