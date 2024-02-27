@@ -21,19 +21,35 @@ class SubGrupoController extends Controller
    */
   public function index(string $cnpj): \Inertia\Response|\Inertia\ResponseFactory
   {
-    return inertia('Estoque/SubGrupo/SubGrupoListagemVue', [
+    return inertia('Estoque/SubGrupo/SubGrupoListagemView', [
       'menus' => $this->links->getMenus(),
       'subMenus' => $this->links->getSubMenus(),
       'subgrupos' => $this->subGrupoProdutoService->listagemSubGrupoPorEmpresa($cnpj)
     ]);
   }
 
+  public function cadastro(): \Inertia\Response|\Inertia\ResponseFactory
+  {
+    return inertia('Estoque/SubGrupo/SubGrupoCadastroView', [
+      'menus' => $this->links->getMenus(),
+      'subMenus' => $this->links->getSubMenus(),
+    ]);
+  }
+
+
   /**
    * Store a newly created resource in storage.
    */
-  public function store(Request $request)
+  public function store(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
-    //
+    $this->subGrupoProdutoService->cadastroSubGrupoPorEmpresa($request->toArray(), $request->route('cnpj'));
+    return redirect($request->route('cnpj') . '/estoque/subgrupo/listagem')->with([
+      'bfm' => [
+        'tipo' => 'sucesso',
+        'titulo' => 'Cadastro de subgrupo',
+        'notificacao' => 'Cadastro de subgrupo concluido com sucesso.'
+      ]
+    ]);
   }
 
   /**

@@ -52,6 +52,8 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
     });
     Route::prefix('subgrupo')->group(function () {
       Route::get('listagem', [\App\Http\Controllers\Estoque\SubGrupo\SubGrupoController::class, 'index'])->name('subgrupo.listagem');
+      Route::get('cadastro', [\App\Http\Controllers\Estoque\SubGrupo\SubGrupoController::class, 'cadastro'])->name('subgrupo.form_cadastro');
+      Route::post('cadastrar', [\App\Http\Controllers\Estoque\SubGrupo\SubGrupoController::class, 'store'])->name('subgrupo.store');
     });
   });
 });

@@ -2,8 +2,14 @@
 import LoadingComponent from "@/components/Uteis/LoadingComponent.vue";
 import NotificacaoComponent from "@/components/Uteis/NotificacaoComponent.vue";
 import NavbarSistemaComponent from "@/components/Navbar/NavbarSistemaComponent.vue";
+import {router} from "@inertiajs/vue3";
 
 export default {
+  methods: {
+    router() {
+      return router
+    }
+  },
   components: {
     LoadingComponent,
     NotificacaoComponent,
@@ -50,7 +56,7 @@ export default {
               prepend-icon="fas fa-plus"
               class="criar"
               variant="tonal"
-              @click="$router.push({ path: 'cadastro' })"
+              @click="router().get('cadastro')"
           >Criar</v-btn
           >
         </div>
@@ -69,15 +75,15 @@ export default {
           </tr>
           </thead>
           <tbody>
-          <tr v-for="subgrupo in subgrupos" :key="subgrupo.sub_grupo_produto_id">
-            <td>{{ subgrupo.sub_grupo_produto_id }}</td>
-            <td>{{ subgrupo.sub_grupo_produto_nome }}</td>
+          <tr v-for="subgrupo in subgrupos" :key="subgrupo.subgrupo_produto_id">
+            <td>{{ subgrupo.subgrupo_produto_id }}</td>
+            <td>{{ subgrupo.subgrupo_produto_nome }}</td>
             <td class="acoes">
               <v-btn
                   density="compact"
                   icon="fas fa-magic"
                   variant="flat"
-                  @click="$router.push({ path: `edicao/${subgrupo.sub_grupo_produto_id}` })"
+                  @click="$router.push({ path: `edicao/${subgrupo.subgrupo_produto_id}` })"
               ></v-btn>
               <v-dialog width="500">
                 <template v-slot:activator="{ props }">
@@ -97,7 +103,7 @@ export default {
                       <v-btn text="Cancelar" @click="isActive.value = false" color="var(--green-confirm)" variant="tonal"></v-btn>
                       <v-btn
                           text="Remover"
-                          @click="remocao(subgrupo.sub_grupo_produto_id)"
+                          @click="remocao(subgrupo.subgrupo_produto_id)"
                           variant="tonal"
                           prepend-icon="fas fa-trash"
                           :disabled="removido"

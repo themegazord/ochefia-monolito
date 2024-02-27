@@ -19,4 +19,10 @@ class SubGrupoProdutoService
     $empresa = $this->empresaService->empresaPorCnpj($cnpj);
     return $this->subGrupoProdutoRepository->listagemSubGrupoPorEmpresa($empresa->getAttribute('empresa_id'))->toArray();
   }
+
+  public function cadastroSubGrupoPorEmpresa(array $dados, string $cnpj): array {
+    $empresa = $this->empresaService->empresaPorCnpj($cnpj);
+    $dados['empresa_id'] = $empresa->getAttribute('empresa_id');
+    return $this->subGrupoProdutoRepository->cadastro($dados)->toArray();
+  }
 }
