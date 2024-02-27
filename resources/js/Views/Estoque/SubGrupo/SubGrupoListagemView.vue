@@ -8,6 +8,13 @@ export default {
   methods: {
     router() {
       return router
+    },
+    remocao(subgrupo_produto_id) {
+      this.loading = true
+
+      this.router().delete(`deletar/${subgrupo_produto_id}`)
+
+      this.loading = false
     }
   },
   components: {
@@ -106,7 +113,6 @@ export default {
                           @click="remocao(subgrupo.subgrupo_produto_id)"
                           variant="tonal"
                           prepend-icon="fas fa-trash"
-                          :disabled="removido"
                           color="var(--vermilion)"
                       ></v-btn>
                     </v-card-actions>

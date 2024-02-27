@@ -103,8 +103,15 @@ class SubGrupoController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(SubGrupoProduto $subGrupo)
+  public function destroy(string $cnpj, int $subgrupo_produto_id): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
-    //
+    $this->subGrupoProdutoService->removeSubGrupoPorEmpresa($cnpj, $subgrupo_produto_id);
+    return redirect($cnpj . '/estoque/subgrupo/listagem')->with([
+      'bfm' => [
+        'tipo' => 'sucesso',
+        'titulo' => 'Remocao do subgrupo',
+        'notificacao' => 'Subgrupo removido com sucesso'
+      ]
+    ]);
   }
 }

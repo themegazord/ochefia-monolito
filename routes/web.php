@@ -56,6 +56,7 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
       Route::post('cadastrar', [\App\Http\Controllers\Estoque\SubGrupo\SubGrupoController::class, 'store'])->name('subgrupo.store');
       Route::get('edicao/{subgrupo_produto_id}', [\App\Http\Controllers\Estoque\SubGrupo\SubGrupoController::class, 'show'])->name('subgrupo.show');
       Route::put('editar/{subgrupo_produto_id}', [\App\Http\Controllers\Estoque\SubGrupo\SubGrupoController::class, 'update'])->name('subgrupo.update');
+      Route::delete('deletar/{subgrupo_produto_id}', [\App\Http\Controllers\Estoque\SubGrupo\SubGrupoController::class, 'destroy'])->name('subgrupo.destroy');
     });
   });
 });

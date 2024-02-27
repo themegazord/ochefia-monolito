@@ -45,4 +45,9 @@ class SubGrupoProdutoService
     $this->consultaSubGrupoPorEmpresa($cnpj, $dados['subgrupo_produto_id']);
     return $this->subGrupoProdutoRepository->atualizaSubGrupoPorEmpresa($dados);
   }
+
+  public function removeSubGrupoPorEmpresa(string $cnpj, int $subgrupo_produto_id): mixed {
+    $empresa = $this->empresaService->empresaPorCnpj($cnpj);
+    return $this->subGrupoProdutoRepository->remocaoSubGrupoPorEmpresa($empresa->getAttribute('empresa_id'), $subgrupo_produto_id);
+  }
 }
