@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Estoque\SubGrupo;
 
+use App\Exceptions\Estoque\SubGrupoProdutoException;
 use App\Http\Controllers\Controller;
 use App\Models\Estoque\SubGrupo\SubGrupoProduto;
 use App\Services\Estoque\SubGrupo\SubGrupoProdutoService;
@@ -55,17 +56,48 @@ class SubGrupoController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(SubGrupoProduto $subGrupo)
+  public function show(string $cnpj, int $subgrupo_produto_id): \Illuminate\Foundation\Application|\Inertia\Response|\Illuminate\Routing\Redirector|\Inertia\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
-    //
+    try {
+      return inertia('Estoque/SubGrupo/SubGrupoEdicaoView', [
+        'menus' => $this->links->getMenus(),
+        'subMenus' => $this->links->getSubMenus(),
+        'subgrupoBanco' => $this->subGrupoProdutoService->consultaSubGrupoPorEmpresa($cnpj, $subgrupo_produto_id)
+      ]);
+    } catch (SubGrupoProdutoException $sgpe) {
+      return redirect($cnpj . '/estoque/subgrupo/listagem')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro do subgrupo',
+          'notificacao' => $sgpe->getMessage()
+        ]
+      ]);
+    }
   }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, SubGrupoProduto $subGrupo)
+  public function update(Request $request, string $cnpj): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
-    //
+    try {
+      $this->subGrupoProdutoService->editaSubGrupoPorEmpresa($request->toArray(), $cnpj);
+      return redirect($cnpj . '/estoque/subgrupo/listagem')->with([
+        'bfm' => [
+          'tipo' => 'sucesso',
+          'titulo' => 'Edição do subgrupo',
+          'notificacao' => 'Subgrupo editado com sucesso'
+        ]
+      ]);
+    } catch (SubGrupoProdutoException $sgpe) {
+      return redirect($cnpj . '/estoque/subgrupo/edicao/' . $request->get('subgrupo_produto_id'))->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro do subgrupo',
+          'notificacao' => $sgpe->getMessage()
+        ]
+      ]);
+    }
   }
 
   /**

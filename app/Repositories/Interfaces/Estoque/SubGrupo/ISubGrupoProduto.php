@@ -3,6 +3,7 @@
 namespace App\Repositories\Interfaces\Estoque\SubGrupo;
 
 use App\Models\Estoque\SubGrupo\SubGrupoProduto;
+use Illuminate\Database\Eloquent\Collection;
 
 interface ISubGrupoProduto
 {

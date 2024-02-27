@@ -83,7 +83,7 @@ export default {
                   density="compact"
                   icon="fas fa-magic"
                   variant="flat"
-                  @click="$router.push({ path: `edicao/${subgrupo.subgrupo_produto_id}` })"
+                  @click="router().get(`edicao/${subgrupo.subgrupo_produto_id}`)"
               ></v-btn>
               <v-dialog width="500">
                 <template v-slot:activator="{ props }">

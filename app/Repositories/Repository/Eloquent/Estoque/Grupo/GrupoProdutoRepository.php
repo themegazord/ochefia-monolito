@@ -22,12 +22,12 @@ class GrupoProdutoRepository implements IGrupoProduto
       ->first();
   }
 
-  public function grupoPorEmpresa(int $empresa_id, int $grupo_produto_id): Collection
+  public function grupoPorEmpresa(int $empresa_id, int $grupo_produto_id): ?GrupoProduto
   {
     return GrupoProduto::query()
       ->where('empresa_id', $empresa_id)
       ->where('grupo_produto_id', $grupo_produto_id)
-      ->get([
+      ->first([
         'empresa_id',
         'grupo_produto_id',
         'grupo_produto_nome',

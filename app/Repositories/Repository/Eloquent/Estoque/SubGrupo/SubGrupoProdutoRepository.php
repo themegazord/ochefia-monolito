@@ -20,7 +20,7 @@ class SubGrupoProdutoRepository implements ISubGrupoProduto
         return SubGrupoProduto::query()
           ->where('empresa_id', $empresa_id)
           ->where('subgrupo_produto_id', $subgrupo_produto_id)
-          ->get([
+          ->first([
             'subgrupo_produto_id',
             'empresa_id',
             'subgrupo_produto_nome'

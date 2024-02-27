@@ -11,7 +11,7 @@ interface IGrupoProduto
 
   public function grupoProdutoPorNome(string $grupoNome): ?GrupoProduto;
 
-  public function grupoPorEmpresa(int $empresa_id, int $grupo_produto_id): Collection;
+  public function grupoPorEmpresa(int $empresa_id, int $grupo_produto_id): ?GrupoProduto;
 
   public function listagemGrupoPorEmpresa(int $empresa_id): Collection;
 
