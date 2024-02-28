@@ -78,7 +78,7 @@ class UnidadeProdutoController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $cnpj)
+  public function update(Request $request, string $cnpj): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
     try {
       $this->unidadeProdutoService->edicaoUnidadeProdutoPorEmpresa($request->toArray(), $cnpj);
@@ -103,8 +103,15 @@ class UnidadeProdutoController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(UnidadeProduto $unidade)
+  public function destroy(string $cnpj, int $unidade_produto_id)
   {
-    //
+    $this->unidadeProdutoService->removeUnidadeProdutoPorEmpresa($cnpj, $unidade_produto_id);
+    return redirect($cnpj . '/estoque/unidade/listagem')->with([
+      'bfm' => [
+        'tipo' => 'sucesso',
+        'titulo' => 'Remoção da unidade de medida',
+        'notificacao' => 'Unidade de medida removida com sucesso'
+      ]
+    ]);
   }
 }

@@ -89,12 +89,12 @@ export default {
 
 <template>
   <v-layout>
-    <NavbarSistemaComponent :menus="menus" :subMenus="subMenus" />
+    <NavbarSistemaComponent :menus="menus" :subMenus="subMenus"/>
     <NotificacaoComponent
         :notificacao="this.$page.props.flash.backendFlashMessage"
         v-if="this.$page.props.flash.backendFlashMessage"
     />
-    <LoadingComponent :loading="loading" />
+    <LoadingComponent :loading="loading"/>
     <v-main>
       <div class="container-cadastro-unidade">
         <h2>Aqui você poderá cadastrar novas unidades de medida de produtos!</h2>
@@ -112,7 +112,8 @@ export default {
                   @input="v$.unidade.unidade_produto_nome.$touch"
                   @blur="v$.unidade.unidade_produto_nome.$touch"
               ></v-text-field
-              ></v-col>
+              >
+            </v-col>
             <v-col cols="6">
               <v-text-field
                   type="text"

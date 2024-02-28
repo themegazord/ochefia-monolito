@@ -10,9 +10,10 @@ class UnidadeProdutoService
 {
   public function __construct(
     private readonly IUnidadeProduto $unidadeProdutoRepository,
-    private readonly EmpresaService $empresaService
+    private readonly EmpresaService  $empresaService
   )
-  {}
+  {
+  }
 
   public function listagemUnidadeProdutoPorEmpresa(string $cnpj): \Illuminate\Database\Eloquent\Collection
   {
@@ -43,7 +44,14 @@ class UnidadeProdutoService
     $this->consultaUnidadeProdutoPorEmpresa($cnpj, $unidade['unidade_produto_id']);
     return $this->unidadeProdutoRepository->editaUnidadeProdutoPorEmpresa($this->alterarSiglaParaUppercase($unidade));
   }
-  protected function alterarSiglaParaUppercase(array $unidade): array {
+
+  public function removeUnidadeProdutoPorEmpresa(string $cnpj, string $unidade_produto_id): mixed
+  {
+    return $this->unidadeProdutoRepository->removeUnidadeProdutoPorEmpresa($this->empresaService->empresaPorCnpj($cnpj)->getAttribute('empresa_id'), $unidade_produto_id);
+  }
+
+  protected function alterarSiglaParaUppercase(array $unidade): array
+  {
     $unidade['unidade_produto_sigla'] = strtoupper($unidade['unidade_produto_sigla']);
     return $unidade;
   }
