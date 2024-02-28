@@ -6,10 +6,12 @@ use App\Repositories\Interfaces\Estoque\Classe\IClasseProduto;
 use App\Repositories\Interfaces\Estoque\Fabricante\IFabricanteProduto;
 use App\Repositories\Interfaces\Estoque\Grupo\IGrupoProduto;
 use App\Repositories\Interfaces\Estoque\SubGrupo\ISubGrupoProduto;
+use App\Repositories\Interfaces\Estoque\Unidade\IUnidadeProduto;
 use App\Repositories\Repository\Eloquent\Estoque\Classe\ClasseProdutoRepository;
 use App\Repositories\Repository\Eloquent\Estoque\Fabricante\FabricanteProdutoRepository;
 use App\Repositories\Repository\Eloquent\Estoque\Grupo\GrupoProdutoRepository;
 use App\Repositories\Repository\Eloquent\Estoque\SubGrupo\SubGrupoProdutoRepository;
+use App\Repositories\Repository\Eloquent\Estoque\Unidade\UnidadeProdutoRepository;
 use App\Repositories\Repository\Eloquent\Usuario\UsuarioRepository;
 use App\Repositories\Repository\Eloquent\Cliente\ClienteRepository;
 use App\Repositories\Interfaces\Usuario\IUsuario;
@@ -25,6 +27,7 @@ use App\Services\Estoque\Classe\ClasseProdutoService;
 use App\Services\Estoque\Fabricante\FabricanteProdutoService;
 use App\Services\Estoque\Grupo\GrupoProdutoService;
 use App\Services\Estoque\SubGrupo\SubGrupoProdutoService;
+use App\Services\Estoque\Unidade\UnidadeProdutoService;
 use App\Services\Funcionario\FuncionarioService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\App;
@@ -76,6 +79,11 @@ class AppServiceProvider extends ServiceProvider
       $empresaService = $app->make(EmpresaService::class);
       return new SubGrupoProdutoService($subGrupoProdutoRepository, $empresaService);
     });
+    $this->app->scoped(UnidadeProdutoService::class, function (Application $app) {
+      $unidadeProdutoRepository = $app->make(IUnidadeProduto::class);
+      $empresaService = $app->make(EmpresaService::class);
+      return new UnidadeProdutoService($unidadeProdutoRepository, $empresaService);
+    });
   }
 
   /**
@@ -91,5 +99,6 @@ class AppServiceProvider extends ServiceProvider
     $this->app->bind(IFabricanteProduto::class, FabricanteProdutoRepository::class);
     $this->app->bind(IGrupoProduto::class, GrupoProdutoRepository::class);
     $this->app->bind(ISubGrupoProduto::class, SubGrupoProdutoRepository::class);
+    $this->app->bind(IUnidadeProduto::class, UnidadeProdutoRepository::class);
   }
 }

@@ -58,5 +58,8 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
       Route::put('editar/{subgrupo_produto_id}', [\App\Http\Controllers\Estoque\SubGrupo\SubGrupoController::class, 'update'])->name('subgrupo.update');
       Route::delete('deletar/{subgrupo_produto_id}', [\App\Http\Controllers\Estoque\SubGrupo\SubGrupoController::class, 'destroy'])->name('subgrupo.destroy');
     });
+    Route::prefix('unidade')->group(function () {
+      Route::get('listagem', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'index'])->name('unidade.listagem');
+    });
   });
 });
