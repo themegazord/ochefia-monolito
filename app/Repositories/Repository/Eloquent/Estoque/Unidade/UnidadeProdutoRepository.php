@@ -22,7 +22,8 @@ class UnidadeProdutoRepository implements IUnidadeProduto
           ->get([
             'unidade_produto_id',
             'empresa_id',
-            'unidade_produto_nome'
+            'unidade_produto_nome',
+            'unidade_produto_sigla'
           ]);
     }
 
@@ -34,7 +35,8 @@ class UnidadeProdutoRepository implements IUnidadeProduto
           ->first([
             'unidade_produto_id',
             'empresa_id',
-            'unidade_produto_nome'
+            'unidade_produto_nome',
+            'unidade_produto_sigla'
           ]);
     }
 

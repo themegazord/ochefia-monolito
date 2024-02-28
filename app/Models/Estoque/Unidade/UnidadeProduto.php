@@ -15,7 +15,8 @@ class UnidadeProduto extends Model
 
     protected $fillable = [
       'empresa_id',
-      'unidade_produto_nome'
+      'unidade_produto_nome',
+      'unidade_produto_sigla',
     ];
 
     public function empresa(): BelongsTo {

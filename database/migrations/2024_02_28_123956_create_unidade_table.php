@@ -14,6 +14,7 @@ return new class extends Migration {
       $table->id('unidade_produto_id');
       $table->unsignedBigInteger('empresa_id');
       $table->string('unidade_produto_nome', 50);
+      $table->string('unidade_produto_sigla', 5);
       $table->timestamps();
 
       $table->foreign('empresa_id')->references('empresa_id')->on('empresas');

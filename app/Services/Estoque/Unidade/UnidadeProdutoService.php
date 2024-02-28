@@ -18,4 +18,16 @@ class UnidadeProdutoService
     $empresa = $this->empresaService->empresaPorCnpj($cnpj);
     return $this->unidadeProdutoRepository->listagemUnidadeProdutoPorEmpresa($empresa->getAttribute('empresa_id'));
   }
+
+  public function cadastroUnidadeProdutoPorEmpresa(string $cnpj, array $unidade): \App\Models\Estoque\Unidade\UnidadeProduto
+  {
+    $unidade['empresa_id'] = $this->empresaService->empresaPorCnpj($cnpj)->getAttribute('empresa_id');
+    $unidade = $this->alterarSiglaParaUppercase($unidade);
+    return $this->unidadeProdutoRepository->cadastro($unidade);
+  }
+
+  protected function alterarSiglaParaUppercase(array $unidade): array {
+    $unidade['unidade_produto_sigla'] = strtoupper($unidade['unidade_produto_sigla']);
+    return $unidade;
+  }
 }

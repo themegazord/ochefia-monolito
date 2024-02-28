@@ -29,12 +29,27 @@ class UnidadeProdutoController extends Controller
     ]);
   }
 
+  public function cadastro(): \Inertia\Response|\Inertia\ResponseFactory
+  {
+    return inertia('Estoque/Unidade/UnidadeCadastroView', [
+      'menus' => $this->links->getMenus(),
+      'subMenus' => $this->links->getSubMenus(),
+    ]);
+  }
+
   /**
    * Store a newly created resource in storage.
    */
   public function store(Request $request)
   {
-    //
+    $this->unidadeProdutoService->cadastroUnidadeProdutoPorEmpresa($request->route('cnpj'), $request->toArray());
+    return redirect($request->route('cnpj') . '/estoque/unidade/listagem')->with([
+      'bfm' => [
+        'tipo' => 'sucesso',
+        'titulo' => 'Cadastro unidade de medida',
+        'notificacao' => 'Unidade de medida cadastrada com sucesso'
+      ]
+    ]);
   }
 
   /**

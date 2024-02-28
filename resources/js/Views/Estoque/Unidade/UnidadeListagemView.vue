@@ -62,7 +62,7 @@ export default {
               prepend-icon="fas fa-plus"
               class="criar"
               variant="tonal"
-              @click="$router.push({ path: 'cadastro' })"
+              @click="router().get('cadastro')"
           >Criar</v-btn
           >
         </div>
@@ -77,6 +77,7 @@ export default {
           <tr>
             <th class="text-left">ID</th>
             <th class="text-left">Nome</th>
+            <th class="text-left">Sigla</th>
             <th class="text-left">Ações</th>
           </tr>
           </thead>
@@ -84,6 +85,7 @@ export default {
           <tr v-for="unidade in unidades" :key="unidade.unidade_produto_id">
             <td>{{ unidade.unidade_produto_id }}</td>
             <td>{{ unidade.unidade_produto_nome }}</td>
+            <td>{{ unidade.unidade_produto_sigla }}</td>
             <td class="acoes">
               <v-btn
                   density="compact"
@@ -154,5 +156,5 @@ export default {
 .acoes {
   display: flex;
   gap: 0.5rem;
-} 
+}
 </style>

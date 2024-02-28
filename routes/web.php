@@ -60,6 +60,8 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
     });
     Route::prefix('unidade')->group(function () {
       Route::get('listagem', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'index'])->name('unidade.listagem');
+      Route::get('cadastro', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'cadastro'])->name('unidade.form_cadastro');
+      Route::post('cadastrar', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'store'])->name('unidade.store');
     });
   });
 });
