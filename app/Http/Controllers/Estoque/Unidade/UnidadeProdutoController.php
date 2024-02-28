@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Estoque\Unidade;
 
+use App\Exceptions\Estoque\UnidadeProdutoException;
 use App\Http\Controllers\Controller;
 use App\Models\Estoque\Unidade\UnidadeProduto;
 use App\Services\Estoque\Unidade\UnidadeProdutoService;
@@ -55,17 +56,48 @@ class UnidadeProdutoController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(UnidadeProduto $unidade)
+  public function show(string $cnpj, int $unidade_produto_id): \Illuminate\Foundation\Application|\Inertia\Response|\Illuminate\Routing\Redirector|\Inertia\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
-    //
+    try {
+      return inertia('Estoque/Unidade/UnidadeEdicaoView', [
+        'menus' => $this->links->getMenus(),
+        'subMenus' => $this->links->getSubMenus(),
+        'unidadeBanco' => $this->unidadeProdutoService->consultaUnidadeProdutoPorEmpresa($cnpj, $unidade_produto_id)
+      ]);
+    } catch (UnidadeProdutoException $upe) {
+      return redirect($cnpj . '/estoque/unidade/listagem')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na unidade de medida',
+          'notificacao' => $upe->getMessage()
+        ]
+      ]);
+    }
   }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, UnidadeProduto $unidade)
+  public function update(Request $request, string $cnpj)
   {
-    //
+    try {
+      $this->unidadeProdutoService->edicaoUnidadeProdutoPorEmpresa($request->toArray(), $cnpj);
+      return redirect($request->route('cnpj') . '/estoque/unidade/listagem')->with([
+        'bfm' => [
+          'tipo' => 'sucesso',
+          'titulo' => 'Edição da unidade de medida',
+          'notificacao' => 'Unidade de medida editada com sucesso'
+        ]
+      ]);
+    } catch (UnidadeProdutoException $upe) {
+      return redirect($request->route('cnpj') . '/estoque/unidade/edicao/' . $request->get('unidade_produto_id'))->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na unidade de medida',
+          'notificacao' => $upe->getMessage()
+        ]
+      ]);
+    }
   }
 
   /**

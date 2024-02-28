@@ -62,6 +62,8 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
       Route::get('listagem', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'index'])->name('unidade.listagem');
       Route::get('cadastro', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'cadastro'])->name('unidade.form_cadastro');
       Route::post('cadastrar', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'store'])->name('unidade.store');
+      Route::get('edicao/{unidade_produto_id}', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'show'])->name('unidade.show');
+      Route::put('editar/{unidade_produto_id}', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'update'])->name('unidade.update');
     });
   });
 });

@@ -19,10 +19,10 @@ export default {
     voltar() {
       return window.history.back()
     },
-    async cadastrar() {
+    async editar() {
       this.loading = true
       if (await this.v$.unidade.$validate()) {
-        this.router().post('cadastrar', this.unidade)
+        this.router().put(`/${this.$page.url.substring(1, 15)}/estoque/unidade/editar/${this.unidade.unidade_produto_id}`, this.unidade)
       }
       this.loading = false
     }
@@ -49,7 +49,14 @@ export default {
     subMenus: {
       type: Array,
       required: true
+    },
+    unidadeBanco: {
+      type: Object,
+      required: true
     }
+  },
+  mounted() {
+    this.unidade = {...this.unidadeBanco}
   },
   validations() {
     return {
@@ -91,7 +98,7 @@ export default {
     <v-main>
       <div class="container-cadastro-unidade">
         <h2>Aqui você poderá cadastrar novas unidades de medida de produtos!</h2>
-        <form class="form-cadastro-unidade" @submit.prevent="cadastrar">
+        <form class="form-cadastro-unidade" @submit.prevent="editar">
           <v-row>
             <v-col cols="6">
               <v-text-field
