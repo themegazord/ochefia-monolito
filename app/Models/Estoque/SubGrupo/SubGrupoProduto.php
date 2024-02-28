@@ -22,7 +22,7 @@ class SubGrupoProduto extends Model
     return $this->belongsTo(Empresa::class, 'empresa_id', 'empresa_id');
   }
 
-//  public function produto(): HasMany {
-//    return $this->hasMany(Produto::class, 'subgrupo_produto_id', 'subgrupo_produto_id');
-//  }
+  public function produto(): HasMany {
+    return $this->hasMany(Produto::class, 'subgrupo_produto_id', 'subgrupo_produto_id');
+  }
 }

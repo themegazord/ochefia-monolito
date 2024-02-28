@@ -22,7 +22,7 @@ class ClasseProduto extends Model
     return $this->belongsTo(Empresa::class, 'empresa_id', 'empresa_id');
   }
 
-//  public function produto(): HasMany {
-//    return $this->hasMany(Produto::class, 'classe_produto_id', 'classe_produto_id');
-//  }
+  public function produto(): HasMany {
+    return $this->hasMany(Produto::class, 'classe_produto_id', 'classe_produto_id');
+  }
 }

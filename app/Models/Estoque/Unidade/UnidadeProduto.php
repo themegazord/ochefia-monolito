@@ -3,9 +3,11 @@
 namespace App\Models\Estoque\Unidade;
 
 use App\Models\Empresa\Empresa;
+use App\Models\Estoque\Produto\Produto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class UnidadeProduto extends Model
 {
@@ -21,5 +23,9 @@ class UnidadeProduto extends Model
 
     public function empresa(): BelongsTo {
       return $this->belongsTo(Empresa::class, 'empresa_id', 'empresa_id');
+    }
+
+    public function produto(): HasMany {
+      return $this->hasMany(Produto::class, 'unidade_produto_id', 'unidade_produto_id');
     }
 }

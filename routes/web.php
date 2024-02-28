@@ -66,5 +66,8 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
       Route::put('editar/{unidade_produto_id}', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'update'])->name('unidade.update');
       Route::delete('deletar/{unidade_produto_id}', [\App\Http\Controllers\Estoque\Unidade\UnidadeProdutoController::class, 'destroy'])->name('unidade.destroy');
     });
+    Route::prefix('produto')->group(function () {
+      Route::get('listagem', [\App\Http\Controllers\Estoque\Produto\ProdutoController::class, 'index'])->name('produto.listagem');
+    });
   });
 });
