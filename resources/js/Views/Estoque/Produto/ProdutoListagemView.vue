@@ -62,7 +62,7 @@ export default {
               prepend-icon="fas fa-plus"
               class="criar"
               variant="tonal"
-              @click="$router.push({ path: 'cadastro' })"
+              @click="router().get('cadastro' )"
           >Criar</v-btn
           >
         </div>
