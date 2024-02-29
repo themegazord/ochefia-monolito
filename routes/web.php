@@ -70,6 +70,8 @@ Route::prefix('{cnpj}')->middleware(['auth', 'verifica.funcionario.empresa'])->g
       Route::get('listagem', [\App\Http\Controllers\Estoque\Produto\ProdutoController::class, 'index'])->name('produto.listagem');
       Route::get('cadastro', [\App\Http\Controllers\Estoque\Produto\ProdutoController::class, 'cadastro'])->name('produto.form_cadastro');
       Route::post('cadastrar', [\App\Http\Controllers\Estoque\Produto\ProdutoController::class, 'store'])->name('produto.store');
+      Route::get('edicao/{produto_id}', [\App\Http\Controllers\Estoque\Produto\ProdutoController::class, 'show'])->name('produto.show');
+      Route::put('editar/{produto_id}', [\App\Http\Controllers\Estoque\Produto\ProdutoController::class, 'update'])->name('produto.update');
     });
   });
 });

@@ -5,6 +5,7 @@ namespace App\Services\Estoque\Produto;
 use App\Exceptions\Estoque\ClasseProdutoException;
 use App\Exceptions\Estoque\FabricanteProdutoException;
 use App\Exceptions\Estoque\GrupoProdutoException;
+use App\Exceptions\Estoque\ProdutoException;
 use App\Exceptions\Estoque\SubGrupoProdutoException;
 use App\Exceptions\Estoque\UnidadeProdutoException;
 use App\Repositories\Interfaces\Estoque\Produto\IProduto;
@@ -64,6 +65,31 @@ class ProdutoService
     $produto['produto_estoque'] = intval($produto['produto_estoque']);
     $produto['produto_preco'] = floatval($produto['produto_preco']);
     return $this->produtoRepository->cadastro($produto);
+  }
+
+  /**
+   * @throws ProdutoException
+   */
+  public function consultaProdutoPorEmpresa(string $cnpj, int $produto_id) {
+    $produto = $this->produtoRepository->consultaProdutoPorEmpresa($this->empresaService->empresaPorCnpj($cnpj)->getAttribute('empresa_id'), $produto_id);
+    return is_null($produto) ? ProdutoException::produtoInexistente() : $produto;
+  }
+
+  /**
+   * @throws GrupoProdutoException
+   * @throws ProdutoException
+   * @throws ClasseProdutoException
+   * @throws SubGrupoProdutoException
+   * @throws UnidadeProdutoException
+   * @throws FabricanteProdutoException
+   */
+  public function editaProdutoPorEmpresa(array $produto, string $cnpj): int
+  {
+    $this->consultaProdutoPorEmpresa($cnpj, $produto['produto_id']);
+    $produto = $this->validaExistenciaDependencias($produto, $cnpj);
+    $produto['produto_estoque'] = intval($produto['produto_estoque']);
+    $produto['produto_preco'] = floatval($produto['produto_preco']);
+    return $this->produtoRepository->edicaoProdutoPorEmpresa($produto);
   }
 
   /**

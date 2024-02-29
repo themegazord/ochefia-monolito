@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Estoque\Produto;
 use App\Exceptions\Estoque\ClasseProdutoException;
 use App\Exceptions\Estoque\FabricanteProdutoException;
 use App\Exceptions\Estoque\GrupoProdutoException;
+use App\Exceptions\Estoque\ProdutoException;
 use App\Exceptions\Estoque\SubGrupoProdutoException;
 use App\Exceptions\Estoque\UnidadeProdutoException;
 use App\Http\Controllers\Controller;
@@ -102,18 +103,91 @@ class ProdutoController extends Controller
 
   /**
    * Display the specified resource.
+   * @throws ProdutoException
    */
-  public function show(string $id)
+  public function show(string $cnpj, int $produto_id): \Illuminate\Foundation\Application|\Inertia\Response|\Illuminate\Routing\Redirector|\Inertia\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
-    //
+    try {
+      return inertia('Estoque/Produto/ProdutoEdicaoView', [
+        'menus' => $this->links->getMenus(),
+        'subMenus' => $this->links->getSubMenus(),
+        'dadosParaCadastro' => $this->produtoService->consultaNecessidadesCadastroProdutoPorEmpresa($cnpj),
+        'produtoBanco' => $this->produtoService->consultaProdutoPorEmpresa($cnpj, $produto_id)
+      ]);
+    }catch (ProdutoException $pe) {
+      return redirect()->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro no produto',
+          'notificacao' => $pe->getMessage()
+        ]
+      ]);
+    }
   }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
+  public function update(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
   {
-    //
+    try {
+      $this->produtoService->editaProdutoPorEmpresa($request->toArray(), $request->route('cnpj'));
+      return redirect($request->route('cnpj') . '/estoque/produto/listagem')->with([
+        'bfm' => [
+          'tipo' => 'sucesso',
+          'titulo' => 'Edição de produto',
+          'notificacao' => 'Produto editado com sucesso'
+        ]
+      ]);
+    } catch (ProdutoException $pe) {
+      return redirect($request->route('cnpj') . '/estoque/produto/cadastro')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro no produto',
+          'notificacao' => $pe->getMessage()
+        ]
+      ]);
+    } catch (ClasseProdutoException $cpe) {
+      return redirect($request->route('cnpj') . '/estoque/produto/cadastro')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na classe',
+          'notificacao' => $cpe->getMessage()
+        ]
+      ]);
+    } catch (FabricanteProdutoException $fpe) {
+      return redirect($request->route('cnpj') . '/estoque/produto/cadastro')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro no fabricante',
+          'notificacao' => $fpe->getMessage()
+        ]
+      ]);
+    } catch (GrupoProdutoException $gpe) {
+      return redirect($request->route('cnpj') . '/estoque/produto/cadastro')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro no grupo',
+          'notificacao' => $gpe->getMessage()
+        ]
+      ]);
+    } catch (SubGrupoProdutoException $sgpe) {
+      return redirect($request->route('cnpj') . '/estoque/produto/cadastro')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro no subgrupo',
+          'notificacao' => $sgpe->getMessage()
+        ]
+      ]);
+    } catch (UnidadeProdutoException $upe) {
+      return redirect($request->route('cnpj') . '/estoque/produto/cadastro')->with([
+        'bfm' => [
+          'tipo' => 'erro',
+          'titulo' => 'Erro na unidade de medida',
+          'notificacao' => $upe->getMessage()
+        ]
+      ]);
+    }
   }
 
   /**

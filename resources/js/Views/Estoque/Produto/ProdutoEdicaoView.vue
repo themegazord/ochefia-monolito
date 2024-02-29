@@ -15,9 +15,9 @@ export default {
     router() {
       return router
     },
-    cadastrar() {
+    editar() {
       this.loading = true
-      this.router().post('cadastrar', this.produto)
+      this.router().put(`/${this.$page.url.substring(1, 15)}/estoque/produto/editar/${this.produto.produto_id}`, this.produto)
       this.loading = false
     }
   },
@@ -58,6 +58,10 @@ export default {
     dadosParaCadastro: {
       type: Object,
       required: true
+    },
+    produtoBanco: {
+      type: Object,
+      required: true
     }
   },
   mounted() {
@@ -68,6 +72,7 @@ export default {
     this.classes = novoObjDadosParaCadastro.classes
     this.fabricantes = novoObjDadosParaCadastro.fabricantes
     this.unidades = novoObjDadosParaCadastro.unidades
+    this.produto = {...this.produtoBanco}
     this.loading = false
   },
   validations() {
@@ -105,8 +110,8 @@ export default {
     <LoadingComponent :loading="loading"/>
     <v-main>
       <div class="container-cadastro-produto">
-        <h2>Aqui você poderá cadastrar novos produtos!</h2>
-        <form class="form-cadastro-produto" @submit.prevent="cadastrar">
+        <h2>Aqui você poderá editar seus produtos!</h2>
+        <form class="form-cadastro-produto" @submit.prevent="editar">
           <v-row>
             <v-col cols="6">
               <v-text-field
@@ -146,6 +151,7 @@ export default {
                   type="number"
                   min="0"
                   step="0"
+                  disabled
               ></v-text-field>
             </v-col>
             <v-col cols="6">
